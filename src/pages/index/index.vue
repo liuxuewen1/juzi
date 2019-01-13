@@ -1,41 +1,79 @@
 <template>
   <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
+    <div class="banner"></div>
+    <div class="content">
+      <div class="search">
+        <div class="searchInput">
+          <span class="searchIcon"></span>
+          <input type="text" placeholder="复仇者联盟">
+        </div>
+      </div>
+      <div class="classItem"></div>
+      <div class="innerItem">
+        <h3>人气套餐推荐</h3>
+        <div class="innerCont">
+          <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
+          <ul class="innerList clearfix">
+            <li class="mr40"><classification :width="300" :height="180" :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+            <li><classification :width="300" :height="180" :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+          </ul>
+        </div>
+      </div>
+      <div class="innerItem">
+        <h3>人气套餐推荐</h3>
+        <div class="innerCont">
+          <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
+          <ul class="innerList2">
+            <li><small-img-item :text="14" :img-src="smallImg" :tit="imgTit" :describe="describe"></small-img-item></li>
+            <li><small-img-item :text="14" :img-src="smallImg" :tit="imgTit" :describe="describe"></small-img-item></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <bottom-menu></bottom-menu>
+    <!-- <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
         <card :text="userInfo.nickName"></card>
       </div>
-    </div>
+    </div> -->
+    
+    <!-- <div class="usermotto">
+      <div class="user-motto"> -->
+        <!-- <card :text="motto"></card> -->
+      <!-- </div>
+    </div> -->
 
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
+    <!-- <form class="form-container">
       <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-    <a href="/pages/self-center/photo/main" class="counter">我的相册</a>
+    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a> -->
   </div>
 </template>
 
 <script>
 import card from '@/components/card'
+import classification from '@/components/classification' //大图
+import smallImgItem from '@/components/smallImgItem' //小图
+import bottomMenu from '@/components/menu' //菜单
 
 export default {
   data () {
     return {
       motto: 'Hello World',
-      userInfo: {}
+      imgTit: '青春年华套图',
+      describe: '科技风',
+      userInfo: {},
+      smallImg: require("../../../static/image/bigimg.jpg")
     }
   },
 
   components: {
-    card
+    card,
+    classification,
+    smallImgItem,
+    bottomMenu
   },
 
   methods: {
@@ -68,18 +106,85 @@ export default {
 </script>
 
 <style scoped>
+.clearfix:after { display: table; content: " "; clear: both;}
+.clearfix{ zoom: 1;}
+.banner{
+  width: 100%;
+  height: 400rpx;
+  box-sizing: border-box;
+  border-bottom: 10rpx solid #000;
+  background-color: red;
+}
+.content{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 50rpx;
+}
+.search{
+  height: 86rpx;
+  margin-top: -43rpx;
+  margin-bottom: 35rpx;
+}
+.searchInput{
+  height: 86rpx;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 24rpx 30rpx;
+  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+}
+.searchInput input{
+  height: 38rpx;
+  min-height: 38rpx;
+  /* line-height: 38rpx; */
+  margin-left: 39rpx;
+  font-size: 32rpx;
+}
+.searchIcon{
+  width: 37rpx;
+  height: 38rpx;
+  float: left;
+  background:url(../../../static/image/icon/i_search.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.classItem{
+  height: 200rpx;
+  width: 100%;
+  margin-bottom: 44rpx;
+}
+.innerItem{
+  margin-bottom: 20rpx;
+}
+.innerItem h3{
+  height: 76rpx;
+}
+.innerList,.innerList2{
+  margin-top: 20rpx;
+}
+.innerList2 li{
+  float: static;
+  margin-bottom: 20rpx;
+  margin-right: 0rpx;
+}
+.innerList li{
+  width: 300rpx;
+  float: left;
+  margin-bottom: 20rpx;
+}
+.innerList .mr40{
+  margin-right: 40rpx;
+}
 .userinfo {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.userinfo-avatar {
+/* .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
-}
+} */
 
 .userinfo-nickname {
   color: #aaa;
