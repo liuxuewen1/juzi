@@ -20,13 +20,40 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 2,
+			"list": [
+				{
+					"id": 11,
+					"name": "我的相册",
+					"pathName": "pages/self-center/photo/main",
+					"query": ""
+				},
+				{
+					"id": 12,
+					"name": "我的订单",
+					"pathName": "pages/self-center/order/main",
+					"query": ""
+				},
+				{
+					"id": 13,
+					"name": "设置页",
+					"pathName": "pages/self-center/setting/main"
+				},
+				{
+					"id": 14,
+					"name": "预约成功",
+					"pathName": "pages/order-success/main"
+				}
+			]
 		}
 	}
 }

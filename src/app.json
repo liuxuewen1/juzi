@@ -2,7 +2,10 @@
   "pages": [
     "pages/index/main",
     "pages/logs/main",
-    "pages/counter/main"
+    "pages/counter/main",
+    "pages/self-center/photo/main",
+    "pages/self-center/order/main",
+    "pages/order-success/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
