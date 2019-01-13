@@ -19,6 +19,7 @@
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
     <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <a href="/pages/self-center/photo/main" class="counter">我的相册</a>
   </div>
 </template>
 
