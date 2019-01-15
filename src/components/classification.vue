@@ -1,14 +1,14 @@
 <template>
   <div class="imgBox">
     <span>{{text}}p</span>
-    <img :src="imgSrc" alt="" :style="{width:width+'rpx',height:height+'rpx'}">
+    <image :src="imgSrc" alt="" style="width:100%;display: block;" mode="widthFix"></image>
     <p>{{tit}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['width','text','imgSrc','tit','height'],
+  props: ['text','imgSrc','tit'],
   data () {
     return {
       // width: this.width,
@@ -19,14 +19,11 @@ export default {
 </script>
 
 <style scoped>
-img{
-  display: block;
-}
 .imgBox {
   position: relative;
   padding: 0;
   margin: 0;
-  /* width: 100%; */
+  width: 100%;
 }
 .imgBox span{
   position: absolute;
