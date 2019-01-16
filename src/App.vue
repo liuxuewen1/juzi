@@ -1,4 +1,6 @@
 <script>
+
+
 export default {
   created () {
     // 调用API从本地缓存中获取数据
@@ -18,9 +20,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* padding: 200rpx 0; */
+  padding-bottom: 120rpx;
   box-sizing: border-box;
+  position: relative;
 }
+.mt20{
+  margin-top: 20rpx;
+}
+.clearfix:after { display: table; content: " "; clear: both;}
+.clearfix{ zoom: 1;}
 /* this rule will be remove */
 * {
   transition: width 2s;

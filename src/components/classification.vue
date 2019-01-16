@@ -21,8 +21,7 @@ export default {
 <style scoped>
 .imgBox {
   position: relative;
-  padding: 0;
-  margin: 0;
+  margin-bottom: 20rpx;
   width: 100%;
 }
 .imgBox span{

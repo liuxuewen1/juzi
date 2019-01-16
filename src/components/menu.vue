@@ -1,17 +1,9 @@
 <template>
   <div class="menu">
     <ul>
-      <li>
-        <span class="icon"></span>
-        <p>推荐</p>
-      </li>
-      <li>
-        <span class="icon"></span>
-        <p>我的</p>
-      </li>
-      <li>
-        <span class="icon"></span>
-        <p>设置</p>
+      <li class="activeShow?'active':''" v-for="(item,index) in tit" :key = "item.key" @click="goNext(index)">
+        <span></span>
+        <p>{{item.text}}</p>
       </li>
     </ul>
   </div>
@@ -23,8 +15,12 @@ export default {
   // props: [],
   data () {
     return {
-      // width: this.width,
-      // text: this.text
+      tit:[{text:'推荐'},{text:'我的'},{text:'设置'}]
+    }
+  },
+  methods:{
+    goNext:function(index){
+      this.$emit('goNext',index);
     }
   }
 }
@@ -36,6 +32,11 @@ export default {
   height: 103rpx;
   box-sizing: border-box;
   padding: 14rpx 50rpx 4rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  box-shadow:  0rpx -3rpx 20rpx #dfdfdf;
 }
 .menu ul{
   display: flex;
@@ -44,6 +45,9 @@ export default {
   flex: 33%;
   text-align: center;
 }
+/* .menu .active{
+  
+} */
 .menu p{
   height: 38rpx;
   line-height: 38rpx;
@@ -52,10 +56,23 @@ export default {
 .menu span{
   display: inline-block;
 }
-.menu span:nth-child(1){
+li:nth-child(1) span{
   width: 50rpx;
-  height: 43rpx;
+  height: 47rpx;
   background: url(../../static/image/icon/i-recom-g.jpg) no-repeat;
+  background-size: 100% 91.4%;
+}
+li:nth-child(2) span{
+  width: 45rpx;
+  height: 47rpx;
+  background: url(../../static/image/icon/i-own-g.jpg) no-repeat;
+  background-size: 100% 95.7%;
+}
+
+li:nth-child(3) span{
+  width: 47rpx;
+  height: 47rpx;
+  background: url(../../static/image/icon/i-collection-g.jpg) no-repeat;
   background-size: 100% 100%;
 }
 </style>
