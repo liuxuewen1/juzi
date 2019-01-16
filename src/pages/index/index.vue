@@ -83,9 +83,9 @@ export default {
       duration: 900,
       circular: true,
       imgUrls: [
-        '../../../static/image/banner01.jpg',
-        '../../../static/image/banner01.jpg',
-        '../../../static/image/banner01.jpg'
+        '/static/image/banner01.jpg',
+        '/static/image/banner01.jpg',
+        '/static/image/banner01.jpg'
       ],
       motto: 'Hello World',
       imgTit: '青春年华套图',
