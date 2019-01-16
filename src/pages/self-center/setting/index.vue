@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 .setting-warp{
   border-top: 1rpx solid #f5f2f1;
 }

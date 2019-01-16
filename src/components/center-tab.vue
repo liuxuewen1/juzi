@@ -1,14 +1,14 @@
 <template>
     <div class="self-center-tab" :class="active">
-        <span>我的相册</span>
-        <span>我的订单</span>
-        <span>我的收藏</span>
+        <span @click="changeTab('photo')">我的相册</span>
+        <span @click="changeTab('order')">我的订单</span>
+        <span @click="changeTab('collection')">我的收藏</span>
     </div>
 </template>
 
 <script>
 export default {
-  props: ['active']
+  props: ['active', 'changeTab']
 }
 </script>
 
