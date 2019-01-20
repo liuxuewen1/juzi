@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
     <ul>
-      <li class="activeShow?'active':''" v-for="(item,index) in tit" :key = "item.key" @click="goNext(index)">
+      <li v-for="(item,index) in tit" :key = "item.key" @click="goNext(index)" :class="activeIndex==index?'active':''" >
         <span></span>
         <p>{{item.text}}</p>
       </li>
@@ -12,10 +12,20 @@
 
 <script>
 export default {
-  // props: [],
+  props: ['activeIndex'],
   data () {
     return {
-      tit:[{text:'推荐'},{text:'我的'},{text:'设置'}]
+      tit:[
+        {
+          text:'推荐'
+        },
+        {
+          text:'我的'
+        },
+        {
+          text:'设置'
+        }
+      ]
     }
   },
   methods:{
@@ -55,6 +65,15 @@ export default {
 }
 .menu span{
   display: inline-block;
+}
+li.active:nth-child(1) span{
+  background-image: url(../../static/image/icon/i-recom-a.jpg);
+}
+li.active:nth-child(2) span{
+  background-image: url(../../static/image/icon/i-own-a.jpg);
+}
+li.active:nth-child(3) span{
+  background-image: url(../../static/image/icon/i-collection-a.jpg);
 }
 li:nth-child(1) span{
   width: 50rpx;

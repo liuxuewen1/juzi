@@ -22,7 +22,15 @@
           <input type="text" placeholder="复仇者联盟">
         </div>
       </div>
-      <div class="classItem"></div>
+      <div class="classItem">
+        <ul class="classList">
+          <li v-for="(item,index) in classType" :key = "item.key" @click="goClass(index)">
+            <span></span>
+            <h3>{{item.tit}}</h3>
+            <div class="bottom"><img :src="item.imgSrc" alt=""></div>
+          </li>
+        </ul>
+      </div>
       <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
@@ -47,7 +55,7 @@
         </div>
       </div>
     </div>
-    <bottom-menu @goNext="clickActive"></bottom-menu>
+    <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu>
     <!-- <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
@@ -86,6 +94,24 @@ export default {
         '/static/image/banner01.jpg',
         '/static/image/banner01.jpg',
         '/static/image/banner01.jpg'
+      ],
+      classType:[
+        {
+          tit:"二次元",
+          imgSrc:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"公主风",
+          imgSrc:"/static/image/bigimg.jpg"
+        },
+        {
+          tit:"极简风",
+          imgSrc:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"科技风",
+          imgSrc:"/static/image/bigimg.jpg"
+        }
       ],
       motto: 'Hello World',
       imgTit: '青春年华套图',
@@ -201,6 +227,52 @@ img{
   height: 200rpx;
   width: 100%;
   margin-bottom: 44rpx;
+  position: relative;
+}
+.classList{
+  position: absolute;
+  left: 0;
+  top:0;
+  height: 200rpx;
+  display: flex;
+}
+.classList li{
+  flex: 1;
+  width: 160rpx;
+  height: 200rpx;
+  box-sizing: border-box;
+  padding: 10rpx;
+  position: relative;
+  box-shadow: 0rpx 5rpx 10rpx #dfdfdf;
+  margin-right: 30rpx;
+}
+.classList h3{
+  height: 38rpx;
+  padding-top: 10rpx;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+  line-height: 1;
+  font-size: 28rpx;
+}
+.classList .bottom{
+  width: 140rpx;
+  height: 142rpx;
+  box-shadow: 0px 20px 30px #fff inset;
+}
+.classList img{
+  width: 140rpx;
+  height: 142rpx;
+  display: block;
+  box-shadow: 0px 20px 30px #fff inset;
+}
+.classList span{
+  position: absolute;
+  right: 14rpx;
+  top: 14rpx;
+  width: 14rpx;
+  height: 14rpx;
+  background:url(../../../static/image/icon/addIcon.jpg) no-repeat;
+  background-size: 100% 100%;
 }
 .innerItem{
   margin-bottom: 20rpx;

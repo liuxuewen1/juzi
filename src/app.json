@@ -5,7 +5,8 @@
     "pages/counter/main",
     "pages/self-center/main",
     "pages/self-center/setting/main",
-    "pages/order-success/main"
+    "pages/order-success/main",
+    "pages/details/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

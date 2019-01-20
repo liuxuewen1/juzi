@@ -31,7 +31,7 @@ img{
   box-sizing: border-box;
   padding: 10rpx;
   width: 100%;
-  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+  box-shadow: 0rpx 5rpx 10rpx #dfdfdf;
   margin-bottom: 20rpx;
 }
 .lift{
