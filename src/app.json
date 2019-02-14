@@ -13,5 +13,32 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#000000",
+    "color": "#666",
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "iconPath": "static/image/icon/i-recom-g.jpg",
+        "selectedIconPath": "static/image/icon/i-recom-a.jpg",
+        "text": "推荐"
+      },
+      {
+        "pagePath": "pages/self-center/main",
+        "iconPath": "static/image/icon/i-own-g.jpg",
+        "selectedIconPath": "static/image/icon/i-own-a.jpg",
+        "text": "我的"
+      },
+      {
+        "pagePath": "pages/self-center/setting/main",
+        "iconPath": "static/image/icon/i-collection-g.jpg",
+        "selectedIconPath": "static/image/icon/i-collection-a.jpg",
+        "text": "设置"
+      }
+    ]
   }
 }
+
