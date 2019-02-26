@@ -6,7 +6,9 @@
     "pages/self-center/main",
     "pages/self-center/setting/main",
     "pages/order-success/main",
-    "pages/details/main"
+    "pages/details/main",
+    "pages/classDetails/main",
+    "pages/classification/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

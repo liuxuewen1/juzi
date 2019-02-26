@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu>
+    <!-- <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu> -->
     <!-- <div class="userinfo" @click="bindViewTap">
       <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
       <div class="userinfo-nickname">
@@ -81,7 +81,7 @@
 import card from '@/components/card'
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
-import bottomMenu from '@/components/menu' //菜单
+// import bottomMenu from '@/components/menu' //菜单
 export default {
   data () {
     return {
@@ -124,8 +124,8 @@ export default {
   components: {
     card,
     classification,
-    smallImgItem,
-    bottomMenu
+    smallImgItem
+    // bottomMenu
   },
 
   methods: {
