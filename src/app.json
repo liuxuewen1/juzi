@@ -8,7 +8,8 @@
     "pages/order-success/main",
     "pages/details/main",
     "pages/classDetails/main",
-    "pages/classification/main"
+    "pages/classification/main",
+    "pages/logIn/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
