@@ -9,7 +9,7 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "touristappid",
+	"appid": "wx0cd772bb25c20dd9",
 	"projectname": "juzi",
 	"condition": {
 		"search": {
