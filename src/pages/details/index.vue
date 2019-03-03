@@ -1,5 +1,6 @@
 <template>
   <div class="container conBox" @click="clickHandle('test click', $event)">
+    <a href="#" class="goPre"><i></i>嗨拍照片商城</a>
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
         :autoplay="autoplay" 
@@ -228,5 +229,21 @@ img{
   position: absolute;
   left: 0;
   top:28rpx;
+}
+.goPre{
+  padding-left: 30rpx;
+  font-size: 36rpx;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+.goPre i{
+  width: 14rpx;
+  height: 28rpx;
+  margin-right: 16rpx;
+  display: inline-block;
+  background: url("../../../static/image/icon/arrow.png") 0 0 no-repeat;
+  background-size:100%;
+
 }
 </style>

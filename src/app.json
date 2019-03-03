@@ -9,7 +9,8 @@
     "pages/details/main",
     "pages/classDetails/main",
     "pages/classification/main",
-    "pages/logIn/main"
+    "pages/logIn/main",
+    "pages/order-details/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

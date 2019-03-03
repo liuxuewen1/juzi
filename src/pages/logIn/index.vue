@@ -5,15 +5,15 @@
       <div class="logIn">
         <ul class="list">
           <li>
-            <input type="tel" placeholder="请输入手机号">
+            <input type="tel" placeholder="请输入手机号" v-model="mobileNum">
           </li>
           <li>
-            <input type="number" placeholder="请输入验证码">
-            <span v-if="!countDown">{{timeText}}</span>
+            <input type="number" placeholder="请输入验证码" v-model="codeNum" :disabled="!countDown">
+            <span v-if="!countDown" @click="getCode">{{timeText}}</span>
             <span v-else class="gray'">{{timeNum}}</span>
           </li>
         </ul>
-        <div class="logBtn"><a href="#">绑定手机号登录</a></div>
+        <div class="logBtn"><a href="#" :class="codeNum != '' && mobileNum != ''?'':'gray'">绑定手机号登录</a></div>
       </div>
     </div>
   <!-- </div> -->
@@ -27,7 +27,9 @@ export default {
       smallImg: require("../../../static/image/bigimg.jpg"),
       countDown:false,
       timeText:"获取验证码",
-      timeNum: 60
+      timeNum: 60,
+      mobileNum:"",
+      codeNum:""
     }
   },
   mounted(){},
@@ -36,7 +38,10 @@ export default {
   },
 
   methods: {
-    
+    getCode(){
+      if(this.mobileNum == "") return;
+      this.countDown = true;
+    }
   },
 
   created () {
@@ -91,7 +96,7 @@ li:nth-child(2) input{
   width: 50%;
   float: left;
 }
-li span{
+span{
   width: 190rpx;
   height: 70rpx;
   text-align: center;
@@ -103,24 +108,25 @@ li span{
   margin-top: 25rpx;
   border-radius: 6rpx;
 }
-li span.gray{
-  background-color: #c1c1c1;
-}
+
 li input{
   height: 100%;
 }
 .logBtn{
   margin-top: 40rpx;
 }
-.logBtn a{
+a{
   height: 100rpx;
   width: 100%;
-  background-color: #c1c1c1;
+  background-color: #f2cc2b;
   color: #fff;
   text-align: center;
   line-height: 100rpx;
   display: inline-block;
   font-size: 28rpx;
   border-radius: 6rpx;
+}
+.gray{
+  background-color: #c1c1c1;
 }
 </style>
