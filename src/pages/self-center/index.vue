@@ -1,7 +1,7 @@
 <template>
   <div class="center-warp">
     <tab :active="active_tab" :changeTab="changeTab"></tab>
-    <div class="box-photo" :style="{'display': active_tab=='photo'? 'block': 'none'}">
+    <div class="box-photo" v-if="!myImgNull" :style="{'display': active_tab=='photo'? 'block': 'none'}">
       <timeline date="2018.12.12" title="周三 . 欢乐谷主题馆"></timeline>
       <div class="photo">
         <img src="/static/image/bigimg.jpg" alt="" class="photo-big">
@@ -14,11 +14,13 @@
     <div class="box-order" :style="{'display': active_tab=='order'? 'block': 'none'}">
       <order :datas="order_data"></order>
     </div>
-    <div class="box-collection" :style="{'display': active_tab=='collection'? 'block': 'none'}">
+    <div class="box-collection" v-if="!shouImgNull" :style="{'display': active_tab=='collection'? 'block': 'none'}">
       <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
       <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
       <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
     </div>
+    <no-photos v-if="active_tab=='photo'&& myImgNull" tit="您还没有拍过美美的照片哦～" text="立即去前往拍摄"></no-photos>
+    <no-photos v-if="active_tab=='collection' && shouImgNull" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos>
   </div>
 </template>
 
@@ -27,9 +29,12 @@ import tab from '@/components/center-tab'
 import timeline from '@/components/timeline'
 import order from '@/components/order'
 import smallitem from '@/components/smallImgItem'
+import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data(){
     return {
+      myImgNull:false,
+      shouImgNull:false,
       active_tab: "photo",
       order_data: [{
           date: "2018-12-22 14:23:23",
@@ -64,7 +69,8 @@ export default {
     tab,
     order,
     timeline,
-    smallitem
+    smallitem,
+    noPhotos
   }
 }
 </script>
@@ -76,7 +82,9 @@ export default {
 .box{
   padding: 20rpx 60rpx 0 40rpx;
 }
-
+.box-collection{
+  padding: 20rpx 28rpx 40rpx;
+}
 .photo{
   margin-left: 28rpx;
   padding: 20rpx 0rpx 0rpx 30rpx;

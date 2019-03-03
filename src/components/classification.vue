@@ -32,7 +32,7 @@ export default {
   line-height: 40rpx;
   width: 40rpx;
   text-align: center;
-  background-color: #535d84;
+  background-color: #f2cc2b;
   color: #fff;
   font-size: 20rpx;
 }

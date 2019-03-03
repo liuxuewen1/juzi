@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container conBox" @click="clickHandle('test click', $event)">
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
         :autoplay="autoplay" 
@@ -26,7 +26,7 @@
       <div class="contItem">
         <h3 class="itemTit"><i>同类作品展示</i><span></span></h3>
         <div class="itemImg">
-          <img v-for="(item,index) in imgUrls" :key="index" :src="item" alt="">
+          <div class="itemImgLi" v-for="(item,index) in imgUrls" :key="index"><img :src="item" alt=""/></div>
         </div>
       </div>
       <div class="contItem">
@@ -41,32 +41,14 @@
       </div>
     </div>
     <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu>
-    <!-- <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div> -->
     
-    <!-- <div class="usermotto">
-      <div class="user-motto"> -->
-        <!-- <card :text="motto"></card> -->
-      <!-- </div>
-    </div> -->
-
-    <!-- <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a> -->
   </div>
 </template>
 
 <script>
-// import card from '@/components/card'
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
-import bottomMenu from '@/components/menu' //菜单
+import bottomMenu from '@/components/bottom' //菜单
 export default {
   data () {
     return {
@@ -134,6 +116,10 @@ export default {
 </script>
 
 <style scoped>
+.conBox{
+  padding-bottom:50rpx;
+  /* position: relative; */
+}
 img{
   display: block;
 }
@@ -213,9 +199,34 @@ img{
   height: 197rpx;
   display: flex;
 }
+.itemImg .itemImgLi{
+  text-align: center;
+  flex: 1;
+}
 .itemImg image{
   width: 200rpx;
   height: 180rpx;
-  flex: 3;
+  display: inline-block;
+  /* margin-right:  */
+}
+.itemLast image{
+  margin-bottom:17rpx;
+}
+.itemLast p{
+  font-size: 28rpx;
+  color: #333;
+  padding-left: 18rpx;
+  line-height: 48rpx;
+  position: relative;
+}
+.itemLast p::before{
+  content: "";
+  width: 7rpx;
+  height: 7rpx;
+  background-color: #333;
+  border-radius: 100%;
+  position: absolute;
+  left: 0;
+  top:28rpx;
 }
 </style>

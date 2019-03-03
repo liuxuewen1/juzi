@@ -20,7 +20,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 120rpx;
+  /* padding-bottom: 120rpx; */
   box-sizing: border-box;
   position: relative;
 }
