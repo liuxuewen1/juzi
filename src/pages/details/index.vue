@@ -87,10 +87,6 @@ export default {
     clickActive(index){
       console.log(index);
     },
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
     getUserInfo () {
       // 调用登录接口
       wx.login({

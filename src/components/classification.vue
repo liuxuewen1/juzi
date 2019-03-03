@@ -1,5 +1,5 @@
 <template>
-  <div class="imgBox">
+  <div @click="toDetail" class="imgBox">
     <span>{{text}}p</span>
     <image :src="imgSrc" alt="" style="width:100%;display: block;" mode="widthFix"></image>
     <p>{{tit}}</p>
@@ -13,6 +13,12 @@ export default {
     return {
       // width: this.width,
       // text: this.text
+    }
+  },
+  methods: {
+    toDetail () {
+      const url = '../details/main'
+      wx.navigateTo({ url })
     }
   }
 }

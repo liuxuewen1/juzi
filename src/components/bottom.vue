@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
     <div class="left"><span></span><br>咨询</div>
-    <div class="center">预约拍摄</div>
+    <div class="center" @click="goAppoint">预约拍摄</div>
     <div class="right"><span></span><br>收藏</div>
   </div>
   
@@ -13,7 +13,16 @@ export default {
     return {
     }
   },
-  methods:{}
+  methods:{
+    gotoSucc () {
+      const url = '../order-success/main'
+      wx.navigateTo({ url })
+      // wx.redirectTo({ url })
+    },
+    goAppoint(){
+      this.gotoSucc()
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="smallImage">
+  <div @click="toDetail" class="smallImage">
     <div class="lift">
       <span>{{text}}p</span>
       <img :src="imgSrc" alt="">
@@ -18,6 +18,12 @@ export default {
     return {
       // width: this.width,
       // text: this.text
+    }
+  },
+  methods: {
+    toDetail () {
+      const url = '../details/main'
+      wx.navigateTo({ url })
     }
   }
 }
