@@ -2,7 +2,7 @@
   <div class="menu">
     <div class="left"><span></span><br>咨询</div>
     <div class="center">预约拍摄</div>
-    <div class="right"><span></span><br>收藏</div>
+    <div class="right" @click="collectionFn"><span :class="collectionRs?'orange':''"></span><br>收藏</div>
   </div>
   
 </template>
@@ -11,9 +11,14 @@
 export default {
   data () {
     return {
+      collectionRs:false
     }
   },
-  methods:{}
+  methods:{
+    collectionFn(){
+      this.collectionRs = !this.collectionRs;
+    }
+  }
 }
 </script>
 
@@ -44,12 +49,16 @@ export default {
 }
 .left span{
   width: 43rpx;
-  background: url(../../static/image/icon/consult.jpg) no-repeat;
+  background: url('../../static/image/icon/consult.jpg') no-repeat;
   background-size: 100% 100%;
 }
 .right span{
   width: 47rpx;
-  background: url(../../static/image/icon/collection.jpg) no-repeat;
+  background: url('../../static/image/icon/collection.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+.right .orange{
+  background: url('../../static/image/icon/collection2.jpg') no-repeat;
   background-size: 100% 100%;
 }
 .menu .center{

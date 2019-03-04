@@ -62,27 +62,19 @@ img{
   display: block;
 }
 .classList{
-  /* position: absolute;
-  left: 0;
-  top:0; */
-  /* height: 200rpx; */
   width: 100%;
   box-sizing: border-box;
-  padding: 0 50rpx;
-  /* display: flex; */
-  /* align-content:space-between; */
+  padding: 0 30rpx;
 }
 .classList li{
-  /* flex-basis: auto; */
-  /* flex:1; */
   float: left;
   width: 160rpx;
+  margin: 25rpx 30rpx;
   height: 200rpx;
   box-sizing: border-box;
   padding: 10rpx;
   position: relative;
   box-shadow: 0rpx 5rpx 10rpx #dfdfdf;
-  /* margin-right: 30rpx; */
 }
 .classList h3{
   height: 38rpx;

@@ -23,13 +23,22 @@
         </div>
       </div>
       <div class="classItem">
-        <ul class="classList">
-          <li v-for="(item,index) in classType" :key = "item.key" @click="goClass(index)">
-            <span></span>
-            <h3>{{item.tit}}</h3>
-            <div class="bottom"><img :src="item.imgSrc" alt=""></div>
-          </li>
-        </ul>
+        <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper">
+          <div class="menu-container" ref="menuContainer">    
+            <ul class="classList">
+              <li v-for="item in classType" :key = "item.key">
+                <span></span>
+                <h3>{{item.tit}}</h3>
+                <div class="bottom"><img :src="item.imgSrc" alt=""></div>
+              </li>
+              <li class="last">
+                <h3>全部分类</h3>
+                <div class="bottom"><img src="/static/image/classAll.jpg" alt=""></div>
+              </li>
+            </ul>
+          </div>
+        </v-touch>
+        
       </div>
       <div class="innerItem">
         <h3>人气套餐推荐</h3>
@@ -55,25 +64,6 @@
         </div>
       </div>
     </div>
-    <!-- <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu> -->
-    <!-- <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div> -->
-    
-    <!-- <div class="usermotto">
-      <div class="user-motto"> -->
-        <!-- <card :text="motto"></card> -->
-      <!-- </div>
-    </div> -->
-
-    <!-- <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a> -->
   </div>
 </template>
 
@@ -81,7 +71,7 @@
 import card from '@/components/card'
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
-// import bottomMenu from '@/components/menu' //菜单
+// import VueTouch from 'vue-touch'
 export default {
   data () {
     return {
@@ -129,6 +119,14 @@ export default {
   },
 
   methods: {
+    swiperleft: function (e,s) {
+      console.log(e+s);
+      // this.$router.push({'path':'/queuehistory'});
+    },
+    swiperright: function (e,s) {
+      console.log(e+s);
+      // this.$router.push({'path':'/home'});
+    },
     swiperChange(e) {
       console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
     },
