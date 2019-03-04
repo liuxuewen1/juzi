@@ -1,8 +1,9 @@
 <template>
   <div class="menu">
     <div class="left"><span></span><br>咨询</div>
-    <div class="center">预约拍摄</div>
+    <div class="center" @click="goAppoint">预约拍摄</div>
     <div class="right" @click="collectionFn"><span :class="collectionRs?'orange':''"></span><br>收藏</div>
+
   </div>
   
 </template>
@@ -17,6 +18,14 @@ export default {
   methods:{
     collectionFn(){
       this.collectionRs = !this.collectionRs;
+    },
+    gotoSucc () {
+      const url = '../order-success/main'
+      wx.navigateTo({ url })
+      // wx.redirectTo({ url })
+    },
+    goAppoint(){
+      this.gotoSucc();
     }
   }
 }

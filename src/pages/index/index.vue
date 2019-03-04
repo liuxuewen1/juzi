@@ -9,7 +9,7 @@
         @change="swiperChange" 
         @animationfinish="animationfinish" style="height: 400rpx;">
         <div v-for="(item,index) in imgUrls" :key="index">
-          <swiper-item>
+          <swiper-item @click="toDetail">
             <image :src="item" class="slide-image"/>
           </swiper-item>
         </div>
@@ -127,6 +127,17 @@ export default {
       console.log(e+s);
       // this.$router.push({'path':'/home'});
     },
+    toDetail () {
+      const url = '../details/main'
+      wx.navigateTo({ url })
+    },
+    toClass () {
+      const url = '../classDetails/main'
+      wx.navigateTo({ url })
+    },
+    goClass(index){
+      this.toClass();
+    },
     swiperChange(e) {
       console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
     },
@@ -136,8 +147,8 @@ export default {
     clickActive(index){
       console.log(index);
     },
-    bindViewTap () {
-      const url = '../logs/main'
+    toDetail () {
+      const url = '../details/main'
       wx.navigateTo({ url })
     },
     getUserInfo () {
