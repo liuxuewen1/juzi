@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="classItem">
-        <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper">
+        <!-- <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper"> -->
           <div class="menu-container" ref="menuContainer">    
             <ul class="classList">
               <li v-for="item in classType" :key = "item.key">
@@ -37,7 +37,7 @@
               </li>
             </ul>
           </div>
-        </v-touch>
+        <!-- </v-touch> -->
         
       </div>
       <div class="innerItem">
@@ -53,6 +53,7 @@
           </ul>
         </div>
       </div>
+      <!-- <button open-type="getUserInfo">获取用户信息</button> -->
       <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
@@ -119,14 +120,6 @@ export default {
   },
 
   methods: {
-    swiperleft: function (e,s) {
-      console.log(e+s);
-      // this.$router.push({'path':'/queuehistory'});
-    },
-    swiperright: function (e,s) {
-      console.log(e+s);
-      // this.$router.push({'path':'/home'});
-    },
     toDetail () {
       const url = '../details/main'
       wx.navigateTo({ url })
@@ -139,10 +132,10 @@ export default {
       this.toClass();
     },
     swiperChange(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
+      // console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
     },
     animationfinish(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
+      // console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
     },
     clickActive(index){
       console.log(index);
@@ -152,14 +145,44 @@ export default {
       wx.navigateTo({ url })
     },
     getUserInfo () {
+      //   wx.getSetting({
+      //     success(res) {
+      //       console.log(res, 64)
+      //       if (!res.authSetting['scope.userInfo']) {
+      //       wx.authorize({
+      //         scope: 'scope.userInfo',
+      //         success() {
+                
+      //         }
+      //       })
+      //     }else{
+      //       wx.getUserInfo({
+      //             success(res){
+      //               console.log(res,66)
+      //               // this.userInfo = res.userInfo
+      //             },
+      //             fail(err){
+      //               console.log(err, 65)
+      //             },
+      //             complete(data){
+      //               console.log(data,67)
+      //             }
+      //           });
+      //     }
+      //   }
+      // });
+     
+      return;
       // 调用登录接口
       wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
+        success(res_code){
+          console.log(res_code, 66)
+          // wx.getUserInfo({
+          //   success(res){
+          //     console.log(res,77)
+          //     this.userInfo = res.userInfo
+          //   }
+          // })
         }
       })
     },
