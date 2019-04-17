@@ -53,7 +53,7 @@
           </ul>
         </div>
       </div>
-      <!-- <button open-type="getUserInfo">获取用户信息</button> -->
+      <button open-type="getUserInfo">获取用户信息</button>
       <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
@@ -172,7 +172,7 @@ export default {
       //   }
       // });
      
-      return;
+      // return;
       // 调用登录接口
       wx.login({
         success(res_code){
