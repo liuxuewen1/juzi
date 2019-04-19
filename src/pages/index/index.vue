@@ -120,6 +120,14 @@ export default {
   },
 
   methods: {
+    getClassType(){
+      console.log(this.$httpWX, 111)
+      this.$httpWX.get({
+        url: '/wechat/pageindex/catelist'
+      }).then(res => {
+        console.log(res)
+      })
+    },
     toDetail () {
       const url = '../details/main'
       wx.navigateTo({ url })
@@ -192,6 +200,7 @@ export default {
   },
 
   created () {
+    this.getClassType();
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
   }
