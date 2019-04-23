@@ -9,20 +9,20 @@
         :circular="circular" 
         @change="swiperChange" 
         @animationfinish="animationfinish" style="height: 400rpx;">
-        <div v-for="(item,index) in imgUrls" :key="index">
+        <div v-for="(item,index) in detail.bannerList" :key="item.id">
           <swiper-item>
-            <image :src="item" class="slide-image"/>
+            <image :src="item.imgPath" class="slide-image"/>
           </swiper-item>
         </div>
       </swiper>
     </div>
-    <h3 class="title">视觉盛宴套图<span class="red">¥500/套</span></h3>
+    <h3 class="title">{{detail.name}}<span class="red">¥500/套</span></h3>
     <div class="content">
       <div class="contItem">
         <h3 class="itemTit"><i>套图说明</i><span></span></h3>
-        <p class="imgText">“内含拍摄场景12个；</p>
-        <p class="imgText">“拍摄时间可依据您的需求灵活选择；</p>
-        <p class="imgText">“拍摄完毕后，照片会同步到您的账号内；</p>
+        <p class="imgText">{{detail.desc}}</p>
+        <!-- <p class="imgText">“拍摄时间可依据您的需求灵活选择；</p>
+        <p class="imgText">“拍摄完毕后，照片会同步到您的账号内；</p> -->
       </div>
       <div class="contItem">
         <h3 class="itemTit"><i>同类作品展示</i><span></span></h3>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <bottom-menu @goNext="clickActive" :active-index="0"></bottom-menu>
+    <bottom-menu :packageid="detail.packageId" @goNext="clickActive" :active-index="0"></bottom-menu>
     
   </div>
 </template>
@@ -53,6 +53,7 @@ import bottomMenu from '@/components/bottom' //菜单
 export default {
   data () {
     return {
+      id: 0,
       indicatorDots: true,
       autoplay: true,
       interval: 5000,
@@ -67,10 +68,10 @@ export default {
       imgTit: '青春年华套图',
       describe: '科技风',
       userInfo: {},
-      smallImg: require("../../../static/image/bigimg.jpg")
+      smallImg: require("../../../static/image/bigimg.jpg"),
+      detail: {}
     }
   },
-  mounted(){},
   components: {
     // card,
     classification,
@@ -101,14 +102,29 @@ export default {
       })
     },
     clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+      // console.log('clickHandle:', msg, ev)
+    },
+    getData(){
+      this.$http.get('/wechat/package/detail?id=' + this.id).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.detail = data.data;
+          console.log(this.detail)
+        }
+      })
     }
   },
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
-  }
+    // this.getUserInfo()
+  },
+  onLoad(options) {
+    this.id = options.id;
+  },
+  mounted(){
+    this.getData()
+  },
 }
 </script>
 

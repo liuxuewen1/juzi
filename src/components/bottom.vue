@@ -10,9 +10,12 @@
 
 <script>
 export default {
+  props: ['packageid'],
   data () {
     return {
-      collectionRs:false
+      collectionRs:false,
+      backIds: '2',
+      mchId: '2'
     }
   },
   methods:{
@@ -25,8 +28,26 @@ export default {
       // wx.redirectTo({ url })
     },
     goAppoint(){
-      this.gotoSucc();
+      // this.gotoSucc();
+      this.onAppoint();
+    },
+    onAppoint(){
+      const params = `packageId=${this.packageid}&backIds=${this.backIds}&mchId=${this.mchId}`;
+      this.$http.get('/wechat/user/subOrder?' + params).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.detail = data.data;
+          console.log(this.detail)
+        }
+      })
     }
+  },
+  mounted(){
+    this.$http.post('https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=' + wx.getStorageSync('x-token'), {
+      scene: 'MjAxOTA0MjIyMjU0NzE1OA=='
+    }).then(res => {
+      console.log(res)
+    })
   }
 }
 </script>

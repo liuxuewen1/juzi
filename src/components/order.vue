@@ -10,6 +10,20 @@ export default {
   props: ['datas'],
   components: {
     item
+  },
+  methods: {
+        getData(){
+            this.$http.get('/wechat/user/myPhotoList').then(res => {
+                const data = res.data;
+                if(data.status == 1000){
+                  this.detail = data.data;
+                  console.log(this.detail)
+                }
+            }) 
+        }
+  },
+  created(){
+    this.getData();
   }
 }
 </script>

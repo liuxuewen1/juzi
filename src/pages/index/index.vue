@@ -26,10 +26,10 @@
         <!-- <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper"> -->
           <div class="menu-container" ref="menuContainer">    
             <ul class="classList">
-              <li v-for="item in classType" :key = "item.key">
+              <li v-for="item in classType" :key="item.key">
                 <span></span>
-                <h3>{{item.tit}}</h3>
-                <div class="bottom"><img :src="item.imgSrc" alt=""></div>
+                <h3>{{item.name}}</h3>
+                <div class="bottom"><img :src="item.imgPath" alt=""></div>
               </li>
               <li class="last">
                 <h3>全部分类</h3>
@@ -53,8 +53,23 @@
           </ul>
         </div>
       </div>
-      <button open-type="getUserInfo">获取用户信息</button>
       <div class="innerItem">
+        <h3>{{jxData.title}}</h3>
+        <div class="innerCont">
+          <!-- <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification> -->
+          <ul class="innerList mt20">
+            <li :class="idx%2==0?'':'mr40'" v-for='(item,idx) in jxData.packageList'>
+              <classification :id="item.id" :key="item.id" :text="14" :img-src="item.imgPath" :tit="item.name"></classification>
+            </li>
+            <!-- <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+            <li class="mr40"><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li> -->
+          </ul>
+        </div>
+      </div>
+      <button open-type="getUserInfo">获取用户信息</button>
+      <!-- <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
           <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
@@ -63,7 +78,7 @@
             <small-img-item :text="14" :img-src="smallImg" :tit="imgTit" :describe="describe"></small-img-item>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -72,6 +87,7 @@
 import card from '@/components/card'
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
+import { promisify } from '@/utils/index' 
 // import VueTouch from 'vue-touch'
 export default {
   data () {
@@ -86,29 +102,15 @@ export default {
         '/static/image/banner01.jpg',
         '/static/image/banner01.jpg'
       ],
-      classType:[
-        {
-          tit:"二次元",
-          imgSrc:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"公主风",
-          imgSrc:"/static/image/bigimg.jpg"
-        },
-        {
-          tit:"极简风",
-          imgSrc:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"科技风",
-          imgSrc:"/static/image/bigimg.jpg"
-        }
-      ],
+      classType:[],
       motto: 'Hello World',
       imgTit: '青春年华套图',
       describe: '科技风',
       userInfo: {},
-      smallImg: require("../../../static/image/bigimg.jpg")
+      smallImg: require("../../../static/image/bigimg.jpg"),
+      hotData: {},
+      categoryData: {},
+      jxData: {}
     }
   },
   mounted(){},
@@ -121,11 +123,11 @@ export default {
 
   methods: {
     getClassType(){
-      console.log(this.$httpWX, 111)
-      this.$httpWX.get({
-        url: '/wechat/pageindex/catelist'
-      }).then(res => {
-        console.log(res)
+      this.$http.get('/wechat/pageindex/catelist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.classType = data.data.list;
+        }
       })
     },
     toDetail () {
@@ -148,61 +150,60 @@ export default {
     clickActive(index){
       console.log(index);
     },
-    toDetail () {
-      const url = '../details/main'
-      wx.navigateTo({ url })
+    login(){
+      let user_info = null;
+      this.getUserInfo().then(user => {
+        user_info = user.userInfo;
+        return promisify(wx.login)()
+      }).then(({ code }) => {
+        return this.$http.get('/wechat/user/login', { 
+          params: { 
+            js_code: code,
+            name: user_info.nickName,
+            sexId: user_info.gender,
+            avatar: user_info.avatarUrl
+          } 
+        })
+      }).then(res => {
+        wx.setStorageSync('x-token', res.data.data.token)
+      })
+    },
+    getWxUser(){
+      return promisify(wx.getUserInfo)()
     },
     getUserInfo () {
-      //   wx.getSetting({
-      //     success(res) {
-      //       console.log(res, 64)
-      //       if (!res.authSetting['scope.userInfo']) {
-      //       wx.authorize({
-      //         scope: 'scope.userInfo',
-      //         success() {
-                
-      //         }
-      //       })
-      //     }else{
-      //       wx.getUserInfo({
-      //             success(res){
-      //               console.log(res,66)
-      //               // this.userInfo = res.userInfo
-      //             },
-      //             fail(err){
-      //               console.log(err, 65)
-      //             },
-      //             complete(data){
-      //               console.log(data,67)
-      //             }
-      //           });
-      //     }
-      //   }
-      // });
-     
-      // return;
-      // 调用登录接口
-      wx.login({
-        success(res_code){
-          console.log(res_code, 66)
-          // wx.getUserInfo({
-          //   success(res){
-          //     console.log(res,77)
-          //     this.userInfo = res.userInfo
-          //   }
-          // })
+      return promisify(wx.getSetting)().then(res => {
+        if (!res.authSetting['scope.userInfo']) {
+          promisify(wx.authorize)({
+            scope: 'scope.userInfo'
+          }).then(res => {
+            return this.getWxUser()
+          })
+        }else{
+          return this.getWxUser()
         }
       })
     },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
+    },
+    getList(){
+      this.$http.get('/wechat/pageindex/packagelist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.hotData = data.data.hotData;
+          // this.categoryData = data.data.hotData;
+          this.jxData = data.data.jxData;
+        }
+      })
     }
   },
 
   created () {
     this.getClassType();
+    this.getList();
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    // this.login()
   }
 }
 </script>
