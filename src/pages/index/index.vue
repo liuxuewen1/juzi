@@ -27,8 +27,8 @@
       <div class="menu-container" ref="menuContainer">    
         <ul class="classList">
           <li v-for="item in classType" :key="item.key">
-            <span></span>
-            <h3>{{item.name}}</h3>
+            <img :src="item.imgUrl" alt="">
+            <h3>{{item.tit}}</h3>
           </li>
         </ul>
       </div>
@@ -111,7 +111,40 @@ export default {
           imgUrl:"/static/image/banner01.jpg"
         }
       ],
-      classType:[],
+      classType:[
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon2.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon3.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon4.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon5.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon6.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon7.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon8.jpg"
+        }
+      ],
       motto: 'Hello World',
       imgTit: '青春年华套图',
       describe: '科技风',
@@ -131,14 +164,14 @@ export default {
   },
 
   methods: {
-    getClassType(){
-      this.$http.get('/wechat/pageindex/catelist').then(res => {
-        const data = res.data;
-        if(data.status == 1000){
-          this.classType = data.data.list;
-        }
-      })
-    },
+    // getClassType(){
+    //   this.$http.get('/wechat/pageindex/catelist').then(res => {
+    //     const data = res.data;
+    //     if(data.status == 1000){
+    //       this.classType = data.data.list;
+    //     }
+    //   })
+    // },
     toDetail () {
       const url = '../details/main'
       wx.navigateTo({ url })
@@ -209,7 +242,7 @@ export default {
   },
 
   created () {
-    this.getClassType();
+    // this.getClassType();
     this.getList();
     // 调用应用实例的方法获取全局数据
     // this.login()
@@ -266,7 +299,6 @@ img{
 .searchInput input{
   height: 38rpx;
   min-height: 38rpx;
-  /* line-height: 38rpx; */
   margin-left: 39rpx;
   font-size: 32rpx;
 }
@@ -277,12 +309,6 @@ img{
   background:url(../../../static/image/icon/i_search.jpg) no-repeat;
   background-size: 100% 100%;
 }
-/* .classItem{ */
-  /* height: 200rpx; */
-  /* width: 100%;
-  margin-bottom: 44rpx;
-  position: relative; */
-/* } */
 .classList{
   height: 250rpx;
   background-color: #fff;
@@ -294,7 +320,6 @@ img{
   width: 25%;
   height: 125rpx;
   text-align: center;
-  /* padding: 10rpx; */
 }
 .classList h3{
   height: 38rpx;
@@ -304,12 +329,9 @@ img{
   line-height: 1;
   font-size: 28rpx;
 }
-.classList span{
-  display: inline-block;
+.classList img{
   width: 64rpx;
   height: 64rpx;
-  background:url(../../../static/image/icon/classIcon.jpg) no-repeat;
-  background-size: -32rpx -19rpx;
 }
 .method{
   height: 100rpx;
