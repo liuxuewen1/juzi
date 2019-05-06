@@ -41,7 +41,12 @@
         </div>
       </div>
     </div>
-    <bottom-menu :packageid="detail.packageId" @goNext="clickActive" :active-index="0"></bottom-menu>
+    <bottom-menu 
+      :packageid="detail.packageId" 
+      :isstore="detail.isStore" 
+      @goNext="clickActive" 
+      :active-index="0">
+    </bottom-menu>
     
   </div>
 </template>
@@ -112,12 +117,19 @@ export default {
           console.log(this.detail)
         }
       })
+      // this.$http.get('/wechat/user/orderDetail?orderId=2').then(res => {
+      //   const data = res.data;
+      //   if(data.status == 1000){
+      //     this.detail = data.data;
+      //     console.log(this.detail)
+      //   }
+      // })
     }
   },
 
   created () {
     // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
+    this.getUserInfo()
   },
   onLoad(options) {
     this.id = options.id;

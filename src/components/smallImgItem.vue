@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  props: ['text','imgSrc','tit','describe'],
+  props: ['text','imgSrc','tit','describe','id'],
   data () {
     return {
       // width: this.width,
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     toDetail () {
-      const url = '../details/main'
+      const url = '../details/main?id=' + this.id
       wx.navigateTo({ url })
     }
   }

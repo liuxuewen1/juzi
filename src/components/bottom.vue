@@ -2,7 +2,7 @@
   <div class="menu">
     <div class="left"><span></span><br>咨询</div>
     <div class="center" @click="goAppoint">预约拍摄</div>
-    <div class="right" @click="collectionFn"><span :class="collectionRs?'orange':''"></span><br>收藏</div>
+    <div class="right" @click="collectionFn"><span :class="isstore?'orange':''"></span><br>收藏</div>
 
   </div>
   
@@ -10,17 +10,20 @@
 
 <script>
 export default {
-  props: ['packageid'],
+  props: ['packageid', 'isstore'],
   data () {
     return {
-      collectionRs:false,
       backIds: '2',
       mchId: '2'
     }
   },
   methods:{
     collectionFn(){
-      this.collectionRs = !this.collectionRs;
+      this.$http.get(`/wechat/package/store?id=${this.packageid}&store=${!this.isstore? 1 : 0}`).then(res => {
+        if(res.data.status == 1000){
+          this.isstore = this.isstore? 0 : 1;
+        }
+      })
     },
     gotoSucc () {
       const url = '../order-success/main'

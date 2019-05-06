@@ -20,6 +20,9 @@ export default {
       const url = '../details/main?id=' + this.id
       wx.navigateTo({ url })
     }
+  },
+  mounted(){
+    console.log(this.imgSrc)
   }
 }
 </script>

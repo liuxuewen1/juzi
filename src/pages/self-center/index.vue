@@ -12,12 +12,17 @@
       </div>
     </div>
     <div class="box-order" :style="{'display': active_tab=='order'? 'block': 'none'}">
-      <order :datas="order_data"></order>
+      <order :datas="orderData"></order>
     </div>
     <div class="box-collection" v-if="!shouImgNull" :style="{'display': active_tab=='collection'? 'block': 'none'}">
-      <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
-      <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
-      <smallitem text="16" imgSrc="/static/image/bigimg.jpg" tit="土星战场" describe="科技风"></smallitem>
+      <smallitem 
+        v-for='item in collectionData' 
+        :text="item.bgNumber" 
+        :imgSrc="item.imgPath" 
+        :tit="item.name" 
+        :describe="item.cateName"
+        :id="item.id"
+      />
     </div>
     <no-photos v-if="active_tab=='photo'&& myImgNull" tit="您还没有拍过美美的照片哦～" text="立即去前往拍摄"></no-photos>
     <no-photos v-if="active_tab=='collection' && shouImgNull" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos>
@@ -33,6 +38,10 @@ import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data(){
     return {
+      pageCollection: 1,
+      pageOrder: 1,
+      collectionData: [],
+      orderData: [],
       myImgNull:false,
       shouImgNull:false,
       active_tab: "photo",
@@ -60,8 +69,29 @@ export default {
   computed: {
   },
   methods: {
+    getOrderList(){
+      this.$http.get(`/wechat/user/subOrderList?page=${this.pageOrder}&pageSize=20`).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.orderData = data.data.orderList; console.log(data)
+        }
+      })
+    },
+    getCollection(){
+      this.$http.get(`/wechat/user/myStorePackages?page=${this.pageCollection}&pageSize=20`).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.collectionData = data.data.packageList; console.log(data)
+        }
+      })
+    },
     changeTab(tab){
       console.log(tab, 88)
+      if(tab === 'collection'){
+        this.getCollection();
+      }else if(tab === 'order'){
+        this.getOrderList();
+      }
       this.active_tab = tab;
     }
   },
@@ -71,6 +101,9 @@ export default {
     timeline,
     smallitem,
     noPhotos
+  },
+  onTabItemTap(item) {
+    this.changeTab(this.active_tab)
   }
 }
 </script>

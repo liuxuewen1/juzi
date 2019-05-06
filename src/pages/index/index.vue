@@ -1,5 +1,6 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <!-- <div class="container" @click="clickHandle('test click', $event)"> -->
+  <div class="container">
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
         :autoplay="autoplay" 
@@ -19,7 +20,7 @@
       <div class="search">
         <div class="searchInput">
           <span class="searchIcon"></span>
-          <input type="text" placeholder="复仇者联盟">
+          <input type="text" @focus="onFocusSearch" placeholder="复仇者联盟">
         </div>
       </div>
       <div class="classItem">
@@ -68,7 +69,8 @@
           </ul>
         </div>
       </div>
-      <button open-type="getUserInfo">获取用户信息</button>
+      <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
+      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
       <!-- <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
@@ -120,8 +122,12 @@ export default {
     smallImgItem
     // bottomMenu
   },
-
   methods: {
+    onFocusSearch(){
+      console.log(1111)
+      const url = '../search/main'
+      wx.navigateTo({ url })
+    },
     getClassType(){
       this.$http.get('/wechat/pageindex/catelist').then(res => {
         const data = res.data;
@@ -156,6 +162,7 @@ export default {
         user_info = user.userInfo;
         return promisify(wx.login)()
       }).then(({ code }) => {
+        console.log(user_info)
         return this.$http.get('/wechat/user/login', { 
           params: { 
             js_code: code,
@@ -184,6 +191,16 @@ export default {
         }
       })
     },
+    getPhoneNumber(e) {
+      const detail = e.mp.detail;
+      if(detail.errMsg.indexOf('user deny') === -1){
+        console.log(detail.iv)
+        console.log(detail.encryptedData,1111)
+        this.$http.post(`/wechat/user/bindPhone?encryptedData=${detail.encryptedData}&iv=${detail.iv}`).then(res => {
+          console.log(res)
+        })
+      }
+    },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
     },
@@ -196,7 +213,12 @@ export default {
           this.jxData = data.data.jxData;
         }
       })
-    }
+    },
+    getLocation(){
+      promisify(wx.getLocation)().then(res => {
+        console.log(res);
+      })
+    },
   },
 
   created () {
@@ -204,6 +226,7 @@ export default {
     this.getList();
     // 调用应用实例的方法获取全局数据
     // this.login()
+    this.getLocation();
   }
 }
 </script>
