@@ -32,9 +32,10 @@
           </li>
         </ul>
       </div>
-      <div class="method">
-
-      </div>
+      <ul class="method">
+        <li><i class="first"></i><span>拍摄助手</span></li>
+        <li><i class="second"></i><span>预约拍摄</span></li>
+      </ul>
         <!-- </v-touch> -->
         
       <!-- </div> -->
@@ -47,7 +48,7 @@
           </ul>
         </div>
       </div>
-      <div class="innerItem">
+      <!-- <div class="innerItem">
         <h3>{{jxData.title}}</h3>
         <div class="innerCont">
           <ul class="innerList mt20">
@@ -56,8 +57,8 @@
             </li>
           </ul>
         </div>
-      </div>
-      <button open-type="getUserInfo">获取用户信息</button>
+      </div> -->
+      <!-- <button open-type="getUserInfo">获取用户信息</button> -->
     </div>
   </div>
 </template>
@@ -312,9 +313,38 @@ img{
 }
 .method{
   height: 100rpx;
+  box-sizing: border-box;
+  padding: 20rpx 0;
   background-color: #fff;
   box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
   margin-bottom: 40rpx;
+}
+.method li{
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+  padding-left: 40rpx; 
+  color: #333;
+  font-size: 28rpx;
+  line-height: 60rpx;
+}
+.method li:nth-child(1){
+  border-right: 1rpx solid #ddd;
+}
+.method i{
+  width: 51rpx;
+  height: 51rpx;
+  float: left;
+  margin-right: 20rpx;
+  margin-top: 3rpx;
+}
+.method .first{
+  background: url(../../../static/image/icon/icon.jpg) -30rpx -23rpx no-repeat;
+  background-size: 483% 200%;
+}
+.method .second{
+  background: url(../../../static/image/icon/icon.jpg) -150rpx -23rpx no-repeat;
+  background-size: 483% 200%;
 }
 .innerItem{
   margin-bottom: 20rpx;
