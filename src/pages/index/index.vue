@@ -23,55 +23,45 @@
           <input type="text" @focus="onFocusSearch" placeholder="复仇者联盟">
         </div>
       </div>
-      <div class="classItem">
+      <!-- <div class="classItem"> -->
         <!-- <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper"> -->
-          <div class="menu-container" ref="menuContainer">    
-            <ul class="classList">
-              <li v-for="item in classType" :key="item.key">
-                <span></span>
-                <h3>{{item.name}}</h3>
-                <div class="bottom"><img :src="item.imgPath" alt=""></div>
-              </li>
-              <li class="last">
-                <h3>全部分类</h3>
-                <div class="bottom"><img src="/static/image/classAll.jpg" alt=""></div>
-              </li>
-            </ul>
-          </div>
+      <div class="menu-container" ref="menuContainer">    
+        <ul class="classList">
+          <li v-for="item in classType" :key="item.key">
+            <img :src="item.imgUrl" alt="">
+            <h3>{{item.tit}}</h3>
+          </li>
+        </ul>
+      </div>
+      <ul class="method">
+        <li><i class="first"></i><span>拍摄助手</span></li>
+        <li><i class="second"></i><span>预约拍摄</span></li>
+      </ul>
         <!-- </v-touch> -->
         
-      </div>
+      <!-- </div> -->
       <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
-          <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
+          <!-- <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification> -->
           <ul class="innerList mt20">
-            <li class="mr40"><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li class="mr40"><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
+            <li :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in listImg" :key="idx"><img :src="item.imgUrl" alt=""><p>{{item.tit}}</p></li>
           </ul>
         </div>
       </div>
-      <div class="innerItem">
+      <!-- <div class="innerItem">
         <h3>{{jxData.title}}</h3>
         <div class="innerCont">
-          <!-- <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification> -->
           <ul class="innerList mt20">
-            <li :class="idx%2==0?'':'mr40'" v-for='(item,idx) in jxData.packageList'>
+            <li :class="idx%2==0?'':'mr18'" v-for='(item,idx) in jxData.packageList' :key="idx">
               <classification :id="item.id" :key="item.id" :text="14" :img-src="item.imgPath" :tit="item.name"></classification>
             </li>
-            <!-- <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li class="mr40"><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li>
-            <li><classification :text="14" :img-src="smallImg" :tit="imgTit"></classification></li> -->
           </ul>
         </div>
       </div>
       <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
       <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
-      <!-- <div class="innerItem">
+      <div class="innerItem">
         <h3>人气套餐推荐</h3>
         <div class="innerCont">
           <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
@@ -90,7 +80,6 @@ import card from '@/components/card'
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
 import { promisify } from '@/utils/index' 
-// import VueTouch from 'vue-touch'
 export default {
   data () {
     return {
@@ -104,7 +93,70 @@ export default {
         '/static/image/banner01.jpg',
         '/static/image/banner01.jpg'
       ],
-      classType:[],
+      listImg:[
+        {
+          tit:"玩心大作战",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"自然传奇",
+          imgUrl:"/static/image/banner01.jpg"
+        }
+      ],
+      classType:[
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/banner01.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon2.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon3.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon4.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon5.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon6.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon7.jpg"
+        },
+        {
+          tit:"欢乐谷",
+          imgUrl:"/static/image/classIcon8.jpg"
+        }
+      ],
       motto: 'Hello World',
       imgTit: '青春年华套图',
       describe: '科技风',
@@ -222,7 +274,7 @@ export default {
   },
 
   created () {
-    this.getClassType();
+    // this.getClassType();
     this.getList();
     // 调用应用实例的方法获取全局数据
     // this.login()
@@ -234,6 +286,9 @@ export default {
 <style scoped>
 img{
   display: block;
+}
+.container{
+  background-color: #f1f1f1;
 }
 .swiper{
   height: 400rpx;
@@ -277,7 +332,6 @@ img{
 .searchInput input{
   height: 38rpx;
   min-height: 38rpx;
-  /* line-height: 38rpx; */
   margin-left: 39rpx;
   font-size: 32rpx;
 }
@@ -288,28 +342,17 @@ img{
   background:url(../../../static/image/icon/i_search.jpg) no-repeat;
   background-size: 100% 100%;
 }
-.classItem{
-  height: 200rpx;
-  width: 100%;
-  margin-bottom: 44rpx;
-  position: relative;
-}
 .classList{
-  position: absolute;
-  left: 0;
-  top:0;
-  height: 200rpx;
-  display: flex;
+  height: 250rpx;
+  background-color: #fff;
+  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+  margin-bottom: 27rpx;
 }
 .classList li{
-  flex: 1;
-  width: 160rpx;
-  height: 200rpx;
-  box-sizing: border-box;
-  padding: 10rpx;
-  position: relative;
-  box-shadow: 0rpx 5rpx 10rpx #dfdfdf;
-  margin-right: 30rpx;
+  float: left;
+  width: 25%;
+  height: 125rpx;
+  text-align: center;
 }
 .classList h3{
   height: 38rpx;
@@ -319,25 +362,44 @@ img{
   line-height: 1;
   font-size: 28rpx;
 }
-.classList .bottom{
-  width: 140rpx;
-  height: 142rpx;
-  box-shadow: 0px 20px 30px #fff inset;
-}
 .classList img{
-  width: 140rpx;
-  height: 142rpx;
-  display: block;
-  box-shadow: 0px 20px 30px #fff inset;
+  width: 64rpx;
+  height: 64rpx;
 }
-.classList span{
-  position: absolute;
-  right: 14rpx;
-  top: 14rpx;
-  width: 14rpx;
-  height: 14rpx;
-  background:url(../../../static/image/icon/addIcon.jpg) no-repeat;
-  background-size: 100% 100%;
+.method{
+  height: 100rpx;
+  box-sizing: border-box;
+  padding: 20rpx 0;
+  background-color: #fff;
+  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+  margin-bottom: 40rpx;
+}
+.method li{
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+  padding-left: 40rpx; 
+  color: #333;
+  font-size: 28rpx;
+  line-height: 60rpx;
+}
+.method li:nth-child(1){
+  border-right: 1rpx solid #ddd;
+}
+.method i{
+  width: 51rpx;
+  height: 51rpx;
+  float: left;
+  margin-right: 20rpx;
+  margin-top: 3rpx;
+}
+.method .first{
+  background: url(../../../static/image/icon/icon.jpg) -30rpx -23rpx no-repeat;
+  background-size: 483% 200%;
+}
+.method .second{
+  background: url(../../../static/image/icon/icon.jpg) -150rpx -23rpx no-repeat;
+  background-size: 483% 200%;
 }
 .innerItem{
   margin-bottom: 20rpx;
@@ -352,10 +414,28 @@ img{
 }
 .innerList li{
   width: 300rpx;
-  /* float: left; */
+  box-sizing: border-box;
+  padding: 10rpx;
+  float: left;
+  background-color: #fff;
+  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+  margin-bottom: 20rpx;
+}
+.innerList p{
+  line-height: 60rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.innerList image{
+  width: 100%;
+  height: 240rpx;
 }
 .innerList .mr40{
   margin-right: 40rpx;
+}
+.innerList .mr18{
+  margin-right: 18rpx;
+
 }
 .userinfo {
   display: flex;

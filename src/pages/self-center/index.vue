@@ -1,6 +1,25 @@
 <template>
   <div class="center-warp">
-    <tab :active="active_tab" :changeTab="changeTab"></tab>
+    <img src="/static/image/bg.jpg" alt="" class="imageBttom">
+    <div class="cont">
+      <div class="user">
+        <div class="user-top">
+          <img src="/static/image/bigimg.jpg" alt="">
+        </div>
+        <p>username</p>
+      </div>
+      <ul class="user-info mb30">
+        <li>个人信息<i></i></li>
+        <li>我的相册<i></i></li>
+        <li>我的订单<i></i></li>
+        <li>我的收藏<i></i></li>
+      </ul>
+      <ul class="user-info">
+        <li>拍摄助手<i></i></li>
+        <li>投诉建议<i></i></li>
+      </ul>
+    </div>
+    <!-- <tab :active="active_tab" :changeTab="changeTab"></tab>
     <div class="box-photo" v-if="!myImgNull" :style="{'display': active_tab=='photo'? 'block': 'none'}">
       <timeline date="2018.12.12" title="周三 . 欢乐谷主题馆"></timeline>
       <div class="photo">
@@ -25,16 +44,16 @@
       />
     </div>
     <no-photos v-if="active_tab=='photo'&& myImgNull" tit="您还没有拍过美美的照片哦～" text="立即去前往拍摄"></no-photos>
-    <no-photos v-if="active_tab=='collection' && shouImgNull" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos>
+    <no-photos v-if="active_tab=='collection' && shouImgNull" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos> -->
   </div>
 </template>
 
 <script>
-import tab from '@/components/center-tab'
-import timeline from '@/components/timeline'
-import order from '@/components/order'
-import smallitem from '@/components/smallImgItem'
-import noPhotos from '@/components/noPhotos' //无照片
+// import tab from '@/components/center-tab'
+// import timeline from '@/components/timeline'
+// import order from '@/components/order'
+// import smallitem from '@/components/smallImgItem'
+// import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data(){
     return {
@@ -96,20 +115,90 @@ export default {
     }
   },
   components: {
-    tab,
-    order,
-    timeline,
-    smallitem,
-    noPhotos
+    // tab,
+    // order,
+    // timeline,
+    // smallitem,
+    // noPhotos
   },
   onTabItemTap(item) {
-    this.changeTab(this.active_tab)
+    // this.changeTab(this.active_tab)
   }
 }
 </script>
 
 <style scoped>
-.center-warp{
+.mb30{
+  margin-bottom: 30rpx;
+}
+.imageBttom{
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
+.cont{
+  text-align: center;
+  position: absolute;
+  top: 142rpx;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  box-sizing: border-box;
+  padding: 0 30rpx 30rpx;
+}
+.user{
+  margin-bottom: 89rpx;
+}
+.user .user-top{
+  width: 160rpx;
+  height: 160rpx;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 100%;
+  box-sizing: border-box;
+  padding: 6rpx;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.user p{
+  height: 55rpx;
+  line-height: 55rpx;
+  font-size: 28rpx;
+  color: #fff;
+}
+.user img{
+  width: 148rpx;
+  height: 148rpx;
+  border-radius: 100%;
+}
+.user-info{
+  background-color: #fff;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  color: #333;
+  box-shadow:  0rpx 5rpx 10rpx #dfdfdf;
+}
+.user-info li{
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: left;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #ddd;
+}
+.user-info li:nth-last-child(1){
+  border: none;
+}
+.user-info li i{
+  width: 14rpx;
+  height: 28rpx;
+  background: url(../../../static/image/icon/jiantou.png) no-repeat;
+  background-size: 100% 100%;
+  float: right;
+  margin-top: 44rpx;
+  margin-right: 1rpx;
+}
+/* .center-warp{
   min-height: 100%;
 }
 .box{
@@ -131,5 +220,5 @@ export default {
   width: 300rpx;
   height: 180rpx;
   margin-right: 20rpx;
-}
+} */
 </style>
