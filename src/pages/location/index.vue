@@ -5,10 +5,11 @@
 
 <script>
 export default {
-  props: ['latitude', 'longitude'],
   data () {
     return {
-      routeInfo: {}
+      routeInfo: {},
+      longitude: '116.3161200000',
+      latitude: '39.9850750000'
     }
   },
 
@@ -20,13 +21,19 @@ export default {
     
   },
   onShow(){
+    console.log(this.latitude)
     wx.openLocation({
-      latitude: this.latitude || 39.9850750000,
-      longitude: this.longitude || 116.3161200000,
+      longitude: this.latitude*1,
+      latitude: this.longitude*1,
       scale: 18
     })
 
   },
+  onLoad(options){
+    this.latitude = options.latitude;
+    this.longitude = options.longitude;
+    console.log(this.latitude,22)
+  }
 }
 </script>
 

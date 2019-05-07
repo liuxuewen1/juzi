@@ -11,6 +11,13 @@ http.interceptors.request.use(config => {
   config.headers['Authorization'] = wx.getStorageSync('x-token');
   return config
 })
+http.interceptors.response.use(response => {
+  if(response.data.status == '1404'){
+    console.log('未登录', response.data.msg)
+  }
+  console.log(response, wx)
+  return response
+})
 Vue.prototype.$http = http;
 
 Vue.config.productionTip = false

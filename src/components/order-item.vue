@@ -1,6 +1,6 @@
 <template>
     <div class="order-item">
-        <div class="top">
+        <div class="top" @click="onClick">
           <p class="date">{{data.updateTime}}</p>
           <div class="content">
             <div class="img">
@@ -16,7 +16,11 @@
             </div>
           </div>
         </div>
-        <guide :addr="data.merchantName"></guide>
+        <guide 
+          :latitude="data.latitude" 
+          :longitude="data.longitude" 
+          :addr="data.merchantName"
+        />
     </div>
 </template>
 
@@ -30,6 +34,11 @@ export default {
   components: {
     guide
   },
+  methods: {
+    onClick(){
+      wx.navigateTo({ url: `/pages/order-success/main?id=${this.data.orderId}`})
+    }
+  }
 }
 </script>
 

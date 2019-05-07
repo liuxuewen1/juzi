@@ -15,7 +15,11 @@
     "pages/classification/main",
     "pages/logIn/main",
     "pages/order-details/main",
-    "pages/search/main"
+    "pages/search/main",
+    "pages/wechatAuthLogin/main",
+    "pages/wechatBindPhone/main",
+    "pages/assistant/main",
+    "pages/appointment/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,11 +1,16 @@
 <template>
   <div class="order-succ-warp">
-    <a href="#" class="goPre"><i></i>我的订单</a>
+    <!-- <a href="#" class="goPre"><i></i>我的订单</a> -->
     <h2 class="title">预约成功！</h2>
     <div class="qrcode">
-      <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1547392534&di=ae1a3d6c36b1c5084273cc81edfa1f61&src=http://y3.ifengimg.com/news_spider/dci_2013/09/b85234c4801f8b2d7771353867a7a0f8.jpg" alt="">
+      <canvas class='canvas' style="width:168px; height:168px;" canvas-id='canvas' bindlongtap='save'></canvas>
+      <!-- <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1547392534&di=ae1a3d6c36b1c5084273cc81edfa1f61&src=http://y3.ifengimg.com/news_spider/dci_2013/09/b85234c4801f8b2d7771353867a7a0f8.jpg" alt=""> -->
     </div>
-    <guide addr="北京市海淀区安徽大厦"></guide>
+    <guide 
+      :addr="data.merchantInfo.address"
+      :latitude="data.merchantInfo.latitude"
+      :longitude="data.merchantInfo.longitude"
+    />
     <div class="rule">
       <img src="../../../static/image/rule.jpg" alt="">
     </div>
@@ -14,18 +19,40 @@
 
 <script>
 import guide from '@/components/address-guide.vue'
+import qrcode from '@/utils/weapp-qrcode.js'
 export default {
   data(){
     return {
+      id: 0,
+      data: {}
     }
   },
   computed: {
   },
   methods: {
+    getDetail(){
+      this.$http.get(`/wechat/user/orderDetail?orderId=${this.id}`).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.data = data.data;
+          new qrcode.QRCode('canvas', {
+              // usingIn: this,
+              width: 168,
+              height: 168,
+              text: data.data.qrStr,
+              correctLevel: qrcode.QRCode.CorrectLevel.H
+          });
+        }
+      })
+    },
   },
   components: {
     guide
   },
+  onLoad(options){
+    this.id = options.id;
+    this.getDetail();
+  }
 }
 </script>
 
@@ -41,11 +68,12 @@ export default {
   margin: 0 auto;
   margin-bottom: 18rpx;
   border: 1rpx solid #f5f2f1;
-  width: 320rpx;
+  width: 168px;
+  padding: 10px;
 }
 .qrcode img{
-  height: 288rpx;
-  width: 288rpx;
+  height: 168px;
+  width: 168px;
   margin: 15rpx;
 }
 .rule{

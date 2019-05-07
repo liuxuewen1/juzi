@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 12,
+			"current": 14,
 			"list": [
 				{
 					"id": 13,
@@ -107,7 +107,19 @@
 				{
 					"id": -1,
 					"name": "地图",
-					"pathName": "pages/location/main"
+					"pathName": "pages/location/main",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "微信授权页",
+					"pathName": "pages/wechatAuthLogin/main",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "微信绑定手机号页",
+					"pathName": "pages/wechatBindPhone/main"
 				}
 			]
 		}

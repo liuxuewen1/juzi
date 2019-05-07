@@ -1,5 +1,5 @@
 <template>
-    <p class="addr">
+    <p class="addr" @click="onClick">
       <i class="location"></i>
       <span>{{addr}}</span>
       <i class="jiantou"></i>
@@ -8,7 +8,16 @@
 
 <script>
 export default {
-  props: ['addr']
+  props: ['addr', 'longitude', 'latitude'],
+  methods:{
+    onClick(){
+      wx.openLocation({
+        longitude: this.latitude*1,
+        latitude: this.longitude*1,
+        scale: 14
+      })
+    }
+  }
 }
 </script>
 
