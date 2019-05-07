@@ -10,9 +10,9 @@
       </div>
       <ul class="user-info mb30">
         <li>个人信息<i></i></li>
-        <li>我的相册<i></i></li>
-        <li>我的订单<i></i></li>
-        <li>我的收藏<i></i></li>
+        <li @click="onClickGo('photo')">我的相册<i></i></li>
+        <li @click="onClickGo('order')">我的订单<i></i></li>
+        <li @click="onClickGo('collection')">我的收藏<i></i></li>
       </ul>
       <ul class="user-info">
         <li>拍摄助手<i></i></li>
@@ -88,6 +88,10 @@ export default {
   computed: {
   },
   methods: {
+    onClickGo(type){
+      const url = './' + type + '/main';
+      wx.navigateTo({ url })
+    },
     getOrderList(){
       this.$http.get(`/wechat/user/subOrderList?page=${this.pageOrder}&pageSize=20`).then(res => {
         const data = res.data;

@@ -9,6 +9,7 @@
     "pages/self-center/order/main",
     "pages/self-center/photo/main",
     "pages/order-success/main",
+    "pages/location/main",
     "pages/details/main",
     "pages/classDetails/main",
     "pages/classification/main",
@@ -53,6 +54,12 @@
         "text": "设置"
       }
     ]
+  },
+  "plugins": {
+      "mapPlugin": {
+          "version": "1.0.6",
+          "provider": "wx5bc2ac602a747594"
+      }
   }
 }
 

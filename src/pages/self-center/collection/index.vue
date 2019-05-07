@@ -47,7 +47,7 @@ export default {
     smallitem,
     noPhotos
   },
-  created(){
+  onLoad(){
     this.getCollection();
   },
   onTabItemTap(item) {

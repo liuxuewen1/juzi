@@ -1,22 +1,22 @@
 <template>
     <div class="order-item">
         <div class="top">
-          <p class="date">{{data.date}}</p>
+          <p class="date">{{data.updateTime}}</p>
           <div class="content">
             <div class="img">
-              <img :src="data.photo" alt="">
+              <img :src="data.imgPath" alt="">
             </div>
             <div class="desc">
-              <p class="title">{{data.title}}</p>
-              <p class="price">{{data.price}}元 | {{data.count}}张</p>
-              <p class="status">{{data.status}}</p>
+              <p class="title">{{data.packName}}</p>
+              <p class="price">{{data.bgNumber}}张</p>
+              <p class="status">{{data.shotState==0? '未拍摄': '已拍摄'}}</p>
             </div>
             <div class="qrcode">
               <img :src="data.qrcode" alt="">
             </div>
           </div>
         </div>
-        <guide :addr="data.address"></guide>
+        <guide :addr="data.merchantName"></guide>
     </div>
 </template>
 

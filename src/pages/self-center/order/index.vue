@@ -37,7 +37,7 @@ export default {
   onTabItemTap(item) {
     // this.changeTab(this.active_tab)
   },
-  created(){
+  onLoad(){
     this.getOrderList();
   }
 }
