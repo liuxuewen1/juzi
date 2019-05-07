@@ -20,7 +20,7 @@
       <div class="search">
         <div class="searchInput">
           <span class="searchIcon"></span>
-          <input type="text" @focus="onFocusSearch" placeholder="复仇者联盟">
+          <input type="text" @focus="onFocusSearch" placeholder="搜索">
         </div>
       </div>
       <!-- <div class="classItem"> -->
@@ -176,7 +176,6 @@ export default {
   },
   methods: {
     onFocusSearch(){
-      console.log(1111)
       const url = '../search/main'
       wx.navigateTo({ url })
     },
