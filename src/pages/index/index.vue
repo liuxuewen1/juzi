@@ -25,8 +25,8 @@
       <div class="menu-container" ref="menuContainer">    
         <ul class="classList">
           <li v-for="item in classType" :key="item.key">
-            <span class="imgIcon"></span>
-            <h3>{{item.tit}}</h3>
+            <span class="imgIcon" :style="{'backgroundImage': 'url('+item.imgPath+')'}"></span>
+            <h3>{{item.name}}</h3>
           </li>
         </ul>
       </div>
@@ -230,7 +230,7 @@ export default {
   },
 
   onLoad() {
-    // this.getClassType();
+    this.getClassType();
     this.getList();
     // 调用应用实例的方法获取全局数据
     // this.login()
@@ -328,9 +328,9 @@ img{
   width: 64rpx;
   height: 64rpx;
   background-repeat: no-repeat;
-  background-size: 400% 100%;
+  background-size: cover;
 }
-.classList li:nth-child(1) .imgIcon{
+/*.classList li:nth-child(1) .imgIcon{
   background-image: url(../../../static/image/icon/classIcon.jpg);
   background-position: 0 0;
 }
@@ -361,7 +361,7 @@ img{
 .classList li:nth-child(8) .imgIcon{
   background-image: url(../../../static/image/icon/classIcon2.jpg);
   background-position: -192rpx 0;
-}
+}*/
 .method{
   height: 100rpx;
   box-sizing: border-box;
