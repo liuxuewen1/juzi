@@ -49,6 +49,8 @@
           </ul>
         </div>
       </div>
+      <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
+      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
       <!-- <div class="innerItem">
         <h3>{{jxData.title}}</h3>
         <div class="innerCont">
