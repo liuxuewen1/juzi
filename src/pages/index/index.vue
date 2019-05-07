@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="container" @click="clickHandle('test click', $event)"> -->
   <div class="container">
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
@@ -23,12 +22,10 @@
           <input type="text" @focus="onFocusSearch" placeholder="搜索">
         </div>
       </div>
-      <!-- <div class="classItem"> -->
-        <!-- <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper"> -->
       <div class="menu-container" ref="menuContainer">    
         <ul class="classList">
           <li v-for="item in classType" :key="item.key">
-            <img :src="item.imgUrl" alt="">
+            <span class="imgIcon"></span>
             <h3>{{item.tit}}</h3>
           </li>
         </ul>
@@ -37,13 +34,9 @@
         <li><i class="first"></i><span>拍摄助手</span></li>
         <li><i class="second"></i><span>预约拍摄</span></li>
       </ul>
-        <!-- </v-touch> -->
-        
-      <!-- </div> -->
       <div class="innerItem">
-        <h3>人气套餐推荐</h3>
+        <h3>人气套餐推荐<span>查看更多<i></i></span></h3>
         <div class="innerCont">
-          <!-- <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification> -->
           <ul class="innerList mt20">
             <li :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in listImg" :key="idx"><img :src="item.imgUrl" alt=""><p>{{item.tit}}</p></li>
           </ul>
@@ -51,36 +44,11 @@
       </div>
       <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
       <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
-      <!-- <div class="innerItem">
-        <h3>{{jxData.title}}</h3>
-        <div class="innerCont">
-          <ul class="innerList mt20">
-            <li :class="idx%2==0?'':'mr18'" v-for='(item,idx) in jxData.packageList' :key="idx">
-              <classification :id="item.id" :key="item.id" :text="14" :img-src="item.imgPath" :tit="item.name"></classification>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
-      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
-      <div class="innerItem">
-        <h3>人气套餐推荐</h3>
-        <div class="innerCont">
-          <classification :width="620" :height="320" :text="14" :img-src="smallImg" :tit="imgTit"></classification>
-          <div class="mt20">
-            <small-img-item :text="14" :img-src="smallImg" :tit="imgTit" :describe="describe"></small-img-item>
-            <small-img-item :text="14" :img-src="smallImg" :tit="imgTit" :describe="describe"></small-img-item>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-import classification from '@/components/classification' //大图
-import smallImgItem from '@/components/smallImgItem' //小图
 import { promisify } from '@/utils/index' 
 export default {
   data () {
@@ -127,36 +95,28 @@ export default {
       ],
       classType:[
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/banner01.jpg"
+          tit:"欢乐谷"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon2.jpg"
+          tit:"日系风"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon3.jpg"
+          tit:"杂志风"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon4.jpg"
+          tit:"街景风"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon5.jpg"
+          tit:"科技风"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon6.jpg"
+          tit:"情侣风"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon7.jpg"
+          tit:"二次元"
         },
         {
-          tit:"欢乐谷",
-          imgUrl:"/static/image/classIcon8.jpg"
+          tit:"极简风"
         }
       ],
       motto: 'Hello World',
@@ -170,12 +130,7 @@ export default {
     }
   },
   mounted(){},
-  components: {
-    card,
-    classification,
-    smallImgItem
-    // bottomMenu
-  },
+  components: {},
   methods: {
     onFocusSearch(){
       const url = '../search/main'
@@ -354,18 +309,58 @@ img{
   width: 25%;
   height: 125rpx;
   text-align: center;
+  box-sizing: border-box;
+  padding-top: 16rpx;
+  font-size: 0;
 }
 .classList h3{
-  height: 38rpx;
-  padding-top: 10rpx;
-  padding-left: 10rpx;
+  height: 40rpx;
+  /* padding-top: 10rpx; */
+  /* padding-left: 10rpx; */
   box-sizing: border-box;
-  line-height: 1;
-  font-size: 28rpx;
+  line-height:40rpx;
+  font-size: 20rpx;
+  color: #333;
 }
-.classList img{
+
+.classList .imgIcon{
+  display: inline-block;
   width: 64rpx;
   height: 64rpx;
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+}
+.classList li:nth-child(1) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon.jpg);
+  background-position: 0 0;
+}
+.classList li:nth-child(2) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon.jpg);
+  background-position: -64rpx 0;
+}
+.classList li:nth-child(3) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon.jpg);
+  background-position: -128rpx 0;
+}
+.classList li:nth-child(4) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon.jpg);
+  background-position: -192rpx 0;
+}
+.classList li:nth-child(5) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon2.jpg);
+  background-position: 0 0;
+}
+.classList li:nth-child(6) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon2.jpg);
+  background-position: -64rpx 0;
+}
+.classList li:nth-child(7) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon2.jpg);
+  background-position: -128rpx 0;
+}
+.classList li:nth-child(8) .imgIcon{
+  background-image: url(../../../static/image/icon/classIcon2.jpg);
+  background-position: -192rpx 0;
 }
 .method{
   height: 100rpx;
@@ -406,7 +401,24 @@ img{
   margin-bottom: 20rpx;
 }
 .innerItem h3{
-  height: 76rpx;
+  height: 64rpx;
+  font-size: 46rpx;
+  line-height: 1;
+  color: #333;
+}
+.innerItem h3 span{
+  float: right;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 46rpx;
+}
+.innerItem h3 i{
+  width: 27rpx;
+  height: 24rpx;
+  display: inline-block;
+  background: url(../../../static/image/icon/jiantouLong.png) no-repeat;
+  background-size: cover;
+  margin-left: 5rpx;
 }
 .innerList{
   display:flex;
