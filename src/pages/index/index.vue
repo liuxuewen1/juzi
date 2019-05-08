@@ -8,19 +8,20 @@
         :circular="circular" 
         @change="swiperChange" 
         @animationfinish="animationfinish" style="height: 400rpx;">
-        <div v-for="(item,index) in imgUrls" :key="index">
+        <div v-for="(item,index) in bannerData" :key="index">
           <swiper-item @click="toDetail">
-            <image :src="item" class="slide-image"/>
+            <image :src="item.imgPath" class="slide-image"/>
           </swiper-item>
         </div>
       </swiper>
     </div>
     <div class="content">
       <div class="search">
-        <div class="searchInput">
+        <div class="index-search" alt="" @click="onFocusSearch" />
+        <!-- <div class="searchInput">
           <span class="searchIcon"></span>
           <input type="text" @focus="onFocusSearch" placeholder="搜索">
-        </div>
+        </div> -->
       </div>
       <div class="menu-container" ref="menuContainer">    
         <ul class="classList">
@@ -31,19 +32,35 @@
         </ul>
       </div>
       <ul class="method">
-        <li><i class="first"></i><span>拍摄助手</span></li>
+        <li @click="onGoAssistant"><i class="first"></i><span>拍摄助手</span></li>
         <li><i class="second"></i><span>预约拍摄</span></li>
       </ul>
-      <div class="innerItem">
-        <h3>人气套餐推荐<span>查看更多<i></i></span></h3>
+      <div class="innerItem" v-if="hotData.packageList.length">
+        <h3>{{hotData.title}}推荐<span>查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
-            <li :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in listImg" :key="idx"><img :src="item.imgUrl" alt=""><p>{{item.tit}}</p></li>
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in hotData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
           </ul>
         </div>
       </div>
-      <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
-      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
+      <div class="innerItem" v-if="jxData.packageList.length">
+        <h3>{{jxData.title}}推荐<span>查看更多<i></i></span></h3>
+        <div class="innerCont">
+          <ul class="innerList mt20">
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in jxData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
+          </ul>
+        </div>
+      </div>
+      <div class="innerItem" v-if="categoryData.packageList.length">
+        <h3>{{categoryData.title}}推荐<span>查看更多<i></i></span></h3>
+        <div class="innerCont">
+          <ul class="innerList mt20">
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in categoryData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
+          </ul>
+        </div>
+      </div>
+      <!-- <button open-type="getUserInfo" @getuserinfo="login">获取用户信息</button>
+      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button> -->
     </div>
   </div>
 </template>
@@ -58,80 +75,24 @@ export default {
       interval: 5000,
       duration: 900,
       circular: true,
-      imgUrls: [
-        '/static/image/banner01.jpg',
-        '/static/image/banner01.jpg',
-        '/static/image/banner01.jpg'
-      ],
-      listImg:[
-        {
-          tit:"玩心大作战",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        },
-        {
-          tit:"自然传奇",
-          imgUrl:"/static/image/banner01.jpg"
-        }
-      ],
-      classType:[
-        {
-          tit:"欢乐谷"
-        },
-        {
-          tit:"日系风"
-        },
-        {
-          tit:"杂志风"
-        },
-        {
-          tit:"街景风"
-        },
-        {
-          tit:"科技风"
-        },
-        {
-          tit:"情侣风"
-        },
-        {
-          tit:"二次元"
-        },
-        {
-          tit:"极简风"
-        }
-      ],
+      bannerData: [],
+      classType: [],
       motto: 'Hello World',
       imgTit: '青春年华套图',
       describe: '科技风',
       userInfo: {},
       smallImg: require("../../../static/image/bigimg.jpg"),
-      hotData: {},
-      categoryData: {},
-      jxData: {}
+      hotData: { packageList: []  },
+      categoryData: { packageList: [] },
+      jxData: { packageList: []  }
     }
   },
   mounted(){},
   components: {},
   methods: {
+    onGoAssistant(){
+      wx.navigateTo({ url: '/pages/assistant/main' })
+    },
     onFocusSearch(){
       const url = '../search/main'
       wx.navigateTo({ url })
@@ -154,6 +115,10 @@ export default {
     },
     goClass(index){
       this.toClass();
+    },
+    onGoDetail(id){
+      const url = '/pages/details/main?id=' + id
+      wx.navigateTo({ url })
     },
     swiperChange(e) {
       // console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
@@ -217,8 +182,16 @@ export default {
         const data = res.data;
         if(data.status == 1000){
           this.hotData = data.data.hotData;
-          // this.categoryData = data.data.hotData;
+          this.categoryData = data.data.categoryData;
           this.jxData = data.data.jxData;
+        }
+      })
+    },
+    getBanner(){
+      this.$http.get('/wechat/pageindex/adlist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.bannerData = data.data.list;
         }
       })
     },
@@ -235,6 +208,7 @@ export default {
     // 调用应用实例的方法获取全局数据
     // this.login()
     this.getLocation();
+    this.getBanner();
   }
 }
 </script>
@@ -276,7 +250,17 @@ img{
   height: 86rpx;
   margin-top: -43rpx;
   margin-bottom: 35rpx;
-  background-color: #fff;
+  /* background-color: #fff; */
+}
+.search img{
+  width: 634rpx;
+  height: 101rpx;
+}
+.index-search{
+  background: url('../../../static/image/index-search.png') no-repeat;
+  width: 634rpx;
+  height: 101rpx;
+  background-size: contain;
 }
 .searchInput{
   height: 86rpx;

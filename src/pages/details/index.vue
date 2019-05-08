@@ -1,6 +1,6 @@
 <template>
   <div class="container conBox" @click="clickHandle('test click', $event)">
-    <a href="#" class="goPre"><i></i>嗨拍照片商城</a>
+    <!-- <a href="#" class="goPre"><i></i>嗨拍照片商城</a> -->
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
         :autoplay="autoplay" 
@@ -9,14 +9,16 @@
         :circular="circular" 
         @change="swiperChange" 
         @animationfinish="animationfinish" style="height: 400rpx;">
-        <div v-for="(item,index) in detail.bannerList" :key="item.id">
+        <div v-for="item in detail.bannerList" :key="item.id">
           <swiper-item>
             <image :src="item.imgPath" class="slide-image"/>
           </swiper-item>
         </div>
       </swiper>
     </div>
-    <h3 class="title">{{detail.name}}<span class="red">¥500/套</span></h3>
+    <h3 class="title">{{detail.name}}
+      <!-- <span class="red">¥500/套</span> -->
+    </h3>
     <div class="content">
       <div class="contItem">
         <h3 class="itemTit"><i>套图说明</i><span></span></h3>
