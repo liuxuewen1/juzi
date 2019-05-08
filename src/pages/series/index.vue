@@ -91,7 +91,9 @@ export default {
       ]
     }
   },
-  components: {},
+  computed: {
+    // smallImgItem
+  },
 
   methods: {
     getClassType(){
