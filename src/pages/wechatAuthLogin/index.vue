@@ -1,6 +1,6 @@
 <template>
   <div class="center-warp">
-    <button open-type="getUserInfo" @getuserinfo="login">微信账号登录</button>
+    <button type="primary" open-type="getUserInfo" @getuserinfo="login">微信账号登录</button>
   </div>
 </template>
 
@@ -60,4 +60,8 @@ export default {
 </script>
 
 <style scoped>
+.center-warp{
+  padding: 0 58rpx;
+  padding-top: 300rpx;
+}
 </style>

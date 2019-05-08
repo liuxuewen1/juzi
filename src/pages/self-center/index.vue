@@ -4,7 +4,13 @@
     <div class="cont">
       <div class="user">
         <div class="user-top">
-          <img src="/static/image/bigimg.jpg" alt="">
+          <img src="/static/image/icon/head-nologin.png" alt="">
+        </div>
+        <a class="login" @click="onLogin">立即登录</a>
+      </div>
+      <div class="user" style="display:none">
+        <div class="user-top">
+          <img src="/static/image/icon/head-nologin.png" alt="">
         </div>
         <p>username</p>
       </div>
@@ -88,8 +94,11 @@ export default {
   computed: {
   },
   methods: {
+    onLogin(){
+      wx.navigateTo({ url: '/pages/wechatBindPhone/main' })
+    },
     onClickGo(type){
-      const url = './' + type + '/main';
+      const url = '/pages/self-center/' + type + '/main';
       wx.navigateTo({ url })
     },
     getOrderList(){
@@ -152,6 +161,17 @@ export default {
 }
 .user{
   margin-bottom: 89rpx;
+}
+.login{
+  display: block;
+  margin: 0 auto;
+  margin-top: 18rpx;
+  width: 146rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  background-color: #eed26e;
+  color: #333;
+  font-size: 28rpx;
 }
 .user .user-top{
   width: 160rpx;
