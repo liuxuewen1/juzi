@@ -2,7 +2,7 @@
   <div class="imgBox">
     <image src="/static/image/icon/smile.jpg" alt="" mode="widthFix"></image>
     <p>{{tit}}</p>
-    <div class="goPage"><span>{{text}}</span></div>
+    <div v-if="text!=''" class="goPage"><span>{{text}}</span></div>
   </div>
 </template>
 

@@ -19,7 +19,8 @@
     "pages/wechatAuthLogin/main",
     "pages/wechatBindPhone/main",
     "pages/assistant/main",
-    "pages/appointment/main"
+    "pages/appointment/main",
+    "pages/searchResult/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,18 +1,5 @@
 <template>
   <div class="conBox">
-    <div class="search">
-        <div class="searchInput">
-          <span class="searchIcon"></span>
-          <input auto-focus :value="key" type="text" @confirm="onConfirm" confirm-type="search" placeholder="搜索">
-        </div>
-        <span class="cancel" @click="onCancel">取消</span>
-      </div>
-    <div class="box-search" v-if="!result.length">
-      <img class="title" src="/static/image/hot-search.png" />
-      <ul class="hot">
-        <li @click="onConfirm(item.name)" v-for="item in keywords">{{item.name}}</li>
-      </ul>
-    </div>
     <div class="cont" v-if="result.length">
       <classification 
         v-for="item in result"
@@ -23,58 +10,44 @@
         :tit="item.name"
       />
     </div>
+    <no-photos v-else-if="!result.length" tit="没搜索到您要的结果～" text=""></no-photos>
   </div>
 </template>
 
 <script>
 import classification from '@/components/classification' //大图
+import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data () {
     return {
       page: 1,
-      keywords: [],
       key: '',
       result: []
     }
   },
   components: {
-    classification
+    classification,
+    noPhotos
   },
 
   methods: {
-    getHotKeywords(){
-      this.$http.get('/wechat/search/hotkeywords').then(res => {
+    getData(){
+      const params = `page=${this.page}&pageSize=20&key=${this.key}`;
+      this.$http.get(`/wechat/search/resultlist?${params}`).then(res => {
         const data = res.data;
         if(data.status == 1000){
-          this.keywords = data.data.list;
+          this.result = data.data.packageList;
+          this.result = this.result.concat(this.result)
         }
-      })
-    },
-    onConfirm(e){
-      if(typeof e === 'string'){
-        this.key = e;
-      }else{
-        this.key = e.mp.detail.value;
-      }
-      wx.navigateTo({ url: '/pages/searchResult/main?key=' + this.key })
-    },
-    onCancel(){
-      // 返回上一页
-      wx.navigateBack({
-        delta: 1
       })
     }
   },
 
   created () {
-    // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
   },
   onLoad(options) {
-  },
-  mounted(){
-    // this.getData()
-    this.getHotKeywords();
+    this.key = options.key;
+    this.getData();
   },
 }
 </script>
