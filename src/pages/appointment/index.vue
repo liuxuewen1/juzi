@@ -23,10 +23,21 @@
       </ul>
       <p>确认预约</p>
     </div>
+    <div class="studio">
+      <h3>选择影棚</h3>
+      <studio></studio>
+    </div>
+    <div class="studio">
+      <h3>选择场景</h3>
+      <scene></scene>
+    </div>
+    
   </div>
 </template>
 
 <script>
+import studio from "@/components/studio";
+import scene from "@/components/scene";
 export default {
   data () {
     return {
@@ -43,7 +54,8 @@ export default {
     }
   },
   components: {
-    // classification
+    studio,
+    scene
   },
 
   methods: {
@@ -114,5 +126,22 @@ export default {
   float: right;
   margin-top: 44rpx;
   margin-right: 1rpx;
+}
+.studio{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:50rpx;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.studio h3{
+  background-color: #fff;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #333;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #ccc;
 }
 </style>

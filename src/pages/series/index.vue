@@ -110,7 +110,9 @@ export default {
       ]
     }
   },
-  components: {},
+  computed: {
+    // smallImgItem
+  },
 
   methods: {
     itemFn(index){
@@ -118,6 +120,7 @@ export default {
         this.data[i].active= false;
       }
       this.data[index].active= true;
+      console.log(this.data[index].active);
     },
     toDetail (item) {
       const url = '../details/main?id=' + item.id;
