@@ -33,7 +33,7 @@
       </div>
       <ul class="method">
         <li @click="onGoAssistant"><i class="first"></i><span>拍摄助手</span></li>
-        <li><i class="second"></i><span>预约拍摄</span></li>
+        <li @click="onGoAppointment"><i class="second"></i><span>预约拍摄</span></li>
       </ul>
       <div class="innerItem" v-if="hotData.packageList.length">
         <h3>{{hotData.title}}推荐<span>查看更多<i></i></span></h3>
@@ -92,6 +92,9 @@ export default {
   methods: {
     onGoAssistant(){
       wx.navigateTo({ url: '/pages/assistant/main' })
+    },
+    onGoAppointment(){
+      wx.navigateTo({ url: '/pages/appointment/main' })
     },
     onFocusSearch(){
       const url = '../search/main'

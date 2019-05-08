@@ -20,7 +20,8 @@
     "pages/wechatBindPhone/main",
     "pages/assistant/main",
     "pages/appointment/main",
-    "pages/searchResult/main"
+    "pages/searchResult/main",
+    "pages/series/main"    
   ],
   "window": {
     "backgroundTextStyle": "light",
