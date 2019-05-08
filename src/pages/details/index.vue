@@ -44,12 +44,15 @@
       </div>
     </div>
     <bottom-menu 
+      v-if="isChose == 0"
       :packageid="detail.packageId" 
       :isstore="detail.isStore" 
       @goNext="clickActive" 
       :active-index="0">
     </bottom-menu>
-    
+    <div class="menu">
+      <div class="chose" @click="onChose">选择套系</div>
+    </div>
   </div>
 </template>
 
@@ -61,6 +64,7 @@ export default {
   data () {
     return {
       id: 0,
+      isChose: 0,
       indicatorDots: true,
       autoplay: true,
       interval: 5000,
@@ -87,6 +91,7 @@ export default {
   },
 
   methods: {
+    onChose(){},
     swiperChange(e) {
       console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
     },
@@ -135,6 +140,7 @@ export default {
   },
   onLoad(options) {
     this.id = options.id;
+    this.isChose = options.chose; //0-非选择套餐 1-选择套餐
   },
   mounted(){
     this.getData()
@@ -271,5 +277,27 @@ img{
   background: url("../../../static/image/icon/arrow.png") 0 0 no-repeat;
   background-size:100%;
 
+}
+
+
+.menu{
+  width: 100%;
+  height: 103rpx;
+  box-sizing: border-box;
+  /*padding: 14rpx 0 4rpx;*/
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #ed6c57;
+  /*box-shadow:  0rpx -3rpx 20rpx #dfdfdf;*/
+  display: flex;
+}
+.chose{
+  text-align: center;
+  color: #fff;
+  margin: 0 auto;
+  font-size: 32rpx;
+  height: 103rpx;
+  line-height: 103rpx;
 }
 </style>

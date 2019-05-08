@@ -1,17 +1,22 @@
 <template>
   <div class="series">
     <ul class="left">
-      <li :class="item.active?'active':''" v-for="(item,index) in data" :key="index" @click="itemFn(index)">{{item.text}}</li>
+      <li 
+        :class="item.active?'active':''" 
+        v-for="item in classType" 
+        :key="item.id" 
+        @click="itemFn(item)">{{item.name}}
+      </li>
     </ul>
     <div class="right">
-      <div v-for="(item,index) in itemData" :key="index" @click="toDetail(item)" class="smallImage">
+      <div v-for="item in data" :key="item.id" @click="toDetail(item)" class="smallImage">
         <div class="itemLift">
-          <span>{{item.text}}p</span>
-          <img :src="item.imgSrc" alt="">
+          <span>{{item.bgNumber}}p</span>
+          <img :src="item.imgPath" alt="">
         </div>
         <div class="itemRight">
-          <h3>{{item.tit}}</h3>
-          <p>#{{item.describe}}</p>
+          <h3>{{item.name}}</h3>
+          <p>#{{item.cateName}}</p>
         </div>
         <a class="link">查看详情></a>
       </div>
@@ -23,32 +28,8 @@
 export default {
   data () {
     return {
-      data:[
-        {
-          text:"推荐",
-          active:true
-        },
-        {
-          text:"推荐",
-          active:false
-        },
-        {
-          text:"推荐",
-          active:false
-        },
-        {
-          text:"推荐",
-          active:false
-        },
-        {
-          text:"推荐",
-          active:false
-        },
-        {
-          text:"推荐",
-          active:false
-        }
-      ],
+      classType:[],
+      data: [],
       itemData: [
         {
           text:"111",
@@ -113,14 +94,69 @@ export default {
   components: {},
 
   methods: {
-    itemFn(index){
-      for(let i = 0; i < this.data.length;i++){
-        this.data[i].active= false;
+    getClassType(){
+      this.$http.get('/wechat/pageindex/catelist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.classType = [{
+            active: true,
+            name: '热门',
+            id: '-1'
+          },{
+            active: false,
+            name: '推荐',
+            id: '-2'
+          }];
+          data.data.list.forEach(item => item.active = false)
+          this.classType = this.classType.concat(data.data.list);
+          this.getHotData();
+        }
+
+      })
+    },
+    itemFn(item){
+      for(let i = 0; i < this.classType.length;i++){
+        this.classType[i].active= false;
       }
-      this.data[index].active= true;
+      item.active = true;
+      if(item.id == -1){
+        // 热门
+        this.getHotData();
+      }else if(item.id == -2){
+        // 推荐
+        this.getGreatData();
+      }else{
+        this.getCateData(item.id);
+      }
+    },
+    getCateData(id){
+      this.$http.get('/wechat/package/getbycateid?cateId='+id).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.data = data.data.packageList;
+        }
+      })
+    },
+    getHotData(){
+      this.$http.get('/wechat/package/hotlist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.data = data.data.packageList;
+        }
+
+      })
+    },
+    getGreatData(){
+      this.$http.get('/wechat/package/greatlist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.data = data.data.packageList;
+        }
+
+      })
     },
     toDetail (item) {
-      const url = '../details/main?id=' + item.id;
+      const url = '../details/main?chose=1&id=' + item.id;
       wx.navigateTo({ url });
     }
   },
@@ -130,6 +166,7 @@ export default {
     // this.getUserInfo()
   },
   onLoad(options) {
+    this.getClassType();
   },
   mounted(){},
 }
