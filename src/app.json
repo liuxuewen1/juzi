@@ -12,7 +12,6 @@
     "pages/location/main",
     "pages/details/main",
     "pages/classDetails/main",
-    "pages/classification/main",
     "pages/logIn/main",
     "pages/order-details/main",
     "pages/search/main",
@@ -21,7 +20,11 @@
     "pages/assistant/main",
     "pages/appointment/main",
     "pages/searchResult/main",
-    "pages/series/main"    
+    "pages/series/main",
+    "pages/personal/main",
+    "pages/complaint/main",
+    "pages/allCategories/main"    
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
