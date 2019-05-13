@@ -64,12 +64,6 @@
 				},
 				{
 					"id": -1,
-					"name": "全部分类",
-					"pathName": "pages/classification/main",
-					"query": ""
-				},
-				{
-					"id": -1,
 					"name": "绑定手机号",
 					"pathName": "pages/logIn/main",
 					"query": ""
@@ -129,6 +123,12 @@
 					"query": ""
 				},
 				{
+					"id": 16,
+					"name": "立即拍摄",
+					"pathName": "pages/appointment/main",
+					"query": ""
+				},
+				{
 					"id": -1,
 					"name": "选择套系",
 					"pathName": "pages/series/main",
@@ -136,14 +136,26 @@
 				},
 				{
 					"id": -1,
-					"name": "立即拍摄",
-					"pathName": "pages/appointment/main",
+					"name": "个人中心",
+					"pathName": "pages/personal/main",
+					"query": ""
+				},
+				{
+					"id": 18,
+					"name": "投诉建议",
+					"pathName": "pages/complaint/main",
 					"query": ""
 				},
 				{
 					"id": -1,
 					"name": "热门和推荐分类列表",
 					"pathName": "pages/hotList/main",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "全部分类",
+					"pathName": "pages/allCategories/main",
 					"query": ""
 				}
 			]

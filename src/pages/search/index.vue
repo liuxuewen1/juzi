@@ -10,12 +10,13 @@
     <div class="box-search" v-if="!result.length">
       <img class="title" src="/static/image/hot-search.png" />
       <ul class="hot">
-        <li @click="onConfirm(item.name)" v-for="item in keywords">{{item.name}}</li>
+        <li @click="onConfirm(item.name)" v-for="item in keywords" :key="item.name">{{item.name}}</li>
       </ul>
     </div>
     <div class="cont" v-if="result.length">
       <classification 
         v-for="item in result"
+        :key="item.name"
         :width="620" 
         :height="320" 
         :text="item.bgNumber" 

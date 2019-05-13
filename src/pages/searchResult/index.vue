@@ -3,6 +3,7 @@
     <div class="cont" v-if="result.length">
       <classification 
         v-for="item in result"
+        :key="item.name"
         :width="620" 
         :height="320" 
         :text="item.bgNumber" 
