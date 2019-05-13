@@ -55,12 +55,6 @@
         "iconPath": "static/image/icon/i-own-g.jpg",
         "selectedIconPath": "static/image/icon/i-own-a.jpg",
         "text": "我的"
-      },
-      {
-        "pagePath": "pages/self-center/setting/main",
-        "iconPath": "static/image/icon/i-collection-g.jpg",
-        "selectedIconPath": "static/image/icon/i-collection-a.jpg",
-        "text": "设置"
       }
     ]
   },

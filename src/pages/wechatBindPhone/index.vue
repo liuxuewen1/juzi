@@ -1,6 +1,6 @@
 <template>
   <div class="center-warp">
-      <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
+      <button type="primary" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">绑定手机号</button>
   </div>
 </template>
 
@@ -34,4 +34,8 @@ export default {
 </script>
 
 <style scoped>
+.center-warp{
+  padding: 0 58rpx;
+  padding-top: 300rpx;
+}
 </style>
