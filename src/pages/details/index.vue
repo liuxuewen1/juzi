@@ -50,8 +50,8 @@
       @goNext="clickActive" 
       :active-index="0">
     </bottom-menu>
-    <div class="menu" v-if="isChose == 1">
-      <div class="chose" @click="onChose(detail.name)">选择套系</div>
+    <div class="menu" @click="onChose(detail.name)" v-if="isChose == 1">
+      <div class="chose">选择套系</div>
     </div>
   </div>
 </template>

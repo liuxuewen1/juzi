@@ -4,9 +4,9 @@
     <div class="cont">
       <div class="user" v-if="!phone">
         <div class="user-top">
-          <img src="/static/image/icon/head-nologin.png" alt="">
+          <img :src="avatar" alt="">
         </div>
-        <a class="login" @click="onLogin">立即登录</a>
+        <a class="login" @click="onLogin">绑定手机号</a>
       </div>
       <div class="user" v-if="phone">
         <div class="user-top">
@@ -15,14 +15,14 @@
         <p>{{username}}</p>
       </div>
       <ul class="user-info mb30">
-        <li>个人信息<i></i></li>
+        <li @click="onClickGo('personal')">个人信息<i></i></li>
         <!-- <li @click="onClickGo('photo')">我的相册<i></i></li> -->
         <li @click="onClickGo('order')">我的订单<i></i></li>
         <li @click="onClickGo('collection')">我的收藏<i></i></li>
       </ul>
       <ul class="user-info">
-        <li>拍摄助手<i></i></li>
-        <li>投诉建议<i></i></li>
+        <li @click="onClickGo('assistant')">拍摄助手<i></i></li>
+        <li @click="onClickGo('complaint')">投诉建议<i></i></li>
       </ul>
     </div>
     <!-- <tab :active="active_tab" :changeTab="changeTab"></tab>
@@ -131,7 +131,7 @@ export default {
     },
     setInfo(){
       this.phone = wx.getStorageSync('x-phone');
-      this.avatar = wx.getStorageSync('x-avatar');
+      this.avatar = wx.getStorageSync('x-avatar') || '/static/image/icon/head-nologin.png';
       this.username = wx.getStorageSync('x-name');
     }
   },
@@ -182,7 +182,7 @@ export default {
   display: block;
   margin: 0 auto;
   margin-top: 18rpx;
-  width: 146rpx;
+  width: 180rpx;
   height: 56rpx;
   line-height: 56rpx;
   background-color: #eed26e;

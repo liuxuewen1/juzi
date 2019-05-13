@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 18,
+			"current": 14,
 			"list": [
 				{
 					"id": 13,
@@ -117,9 +117,9 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "拍摄助手",
-					"pathName": "pages/assistant/main",
+					"pathName": "pages/self-center/assistant/main",
 					"query": ""
 				},
 				{
@@ -135,15 +135,15 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "个人中心",
-					"pathName": "pages/personal/main",
+					"pathName": "pages/self-center/personal/main",
 					"query": ""
 				},
 				{
 					"id": 18,
 					"name": "投诉建议",
-					"pathName": "pages/complaint/main",
+					"pathName": "pages/self-center/complaint/main",
 					"query": ""
 				},
 				{

@@ -1,9 +1,9 @@
 <template>
-  <div class="appointment">
+  <div class="">
     <div class="banner">
-      <textarea placeholder="您想对我们说..."></textarea>
+      <textarea v-model="message" placeholder="您想对我们说..."></textarea>
     </div>
-    <p><span>提交</span></p>
+    <p @click="onSubmit"><span>提交</span></p>
     
   </div>
 </template>
@@ -12,28 +12,38 @@
 export default {
   data () {
     return {
-      // indicatorDots: true,
-      // autoplay: true,
-      // interval: 5000,
-      // duration: 900,
-      // circular: true
-      // imgUrls: [
-      //   '/static/image/banner01.jpg',
-      //   '/static/image/banner01.jpg',
-      //   '/static/image/banner01.jpg'
-      // ]
+      message: ''
     }
   },
   components: {
-    // studio,
-    // scene
+    
   },
 
-  methods: {},
+  methods: {
+    onSubmit(){
+        if(!this.message) {
+          wx.showToast({
+            title: '请输入反馈内容~',
+            icon: 'none',
+            duration: 2000
+          })
+          return;
+        }
+        this.$http.post(`/wechat/user/subOpinion?message=${this.message}`).then(res => {
+          const data = res.data;
+          if(data.status == 1000){
+            wx.showToast({
+              title: '谢谢您的反馈，我们会尽快处理~',
+              icon: 'success',
+              duration: 2000
+            })
+          }
+        })
+    }
+  },
 
   created () {
-    // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
+    
   },
   onLoad(options) {
   },
@@ -48,7 +58,7 @@ export default {
   padding: 50rpx 50rpx 0;
   box-sizing: border-box;
   border-top:1px solid #f2f2f2;
-  line-height: 300rpx;
+  /*line-height: 300rpx;*/
   /* background-color: #fff; */
 }
 textarea{

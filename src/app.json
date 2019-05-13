@@ -8,6 +8,9 @@
     "pages/self-center/collection/main",
     "pages/self-center/order/main",
     "pages/self-center/photo/main",
+    "pages/self-center/personal/main",
+    "pages/self-center/complaint/main",
+    "pages/self-center/assistant/main",
     "pages/order-success/main",
     "pages/location/main",
     "pages/details/main",
@@ -17,13 +20,10 @@
     "pages/search/main",
     "pages/wechatAuthLogin/main",
     "pages/wechatBindPhone/main",
-    "pages/assistant/main",
     "pages/appointment/main",
     "pages/searchResult/main",
     "pages/series/main",
     "pages/hotList/main",
-    "pages/personal/main",
-    "pages/complaint/main",
     "pages/allCategories/main"
   ],
   "window": {

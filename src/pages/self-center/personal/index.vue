@@ -1,17 +1,17 @@
 <template>
   <div class="appointment">
-    <div class="banner"><span>头像</span><img src="/static/image/banner01.jpg" alt=""></div>
+    <div class="banner"><span>头像</span><img :src="avatar" alt=""></div>
     <div class="bgc"></div>
     <div class="bottom">
       <ul class="user-info mb30">
-        <li>昵称<i>吴彦祖</i></li>
-        <li>性别<i>男</i></li>
-        <li>出生日期<i>1990-10-18</i></li>
-        <li>地区<i>深圳</i></li>
-        <li>手机号<i>1566666777</i></li>
+        <li>昵称<i>{{username}}</i></li>
+        <li>性别<i>{{gender}}</i></li>
+        <!-- <li>出生日期<i>1990-10-18</i></li> -->
+        <li>地区<i>{{city}}</i></li>
+        <li>手机号<i>{{phone}}</i></li>
       </ul>
     </div>
-    <p>退出登录</p>
+    <!-- <p>退出登录</p> -->
     
   </div>
 </template>
@@ -20,16 +20,30 @@
 export default {
   data () {
     return {
+      avatar: '',
+      username: '',
+      city: '',
+      phone: '',
+      gender: '',
     }
   },
   components: {
   },
 
-  methods: {},
+  methods: {
+    getInfo(){
+      this.avatar = wx.getStorageSync('x-avatar');
+      this.username = wx.getStorageSync('x-name');
+      this.city = wx.getStorageSync('x-city');
+      this.phone = wx.getStorageSync('x-phone');
+      this.gender = wx.getStorageSync('x-gender') == 1? '男' : '女';
+    }
+  },
 
   created () {
   },
   onLoad(options) {
+    this.getInfo();
   },
   mounted(){},
 }

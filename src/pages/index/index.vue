@@ -97,7 +97,7 @@ export default {
       wx.navigateTo({ url: '/pages/classDetails/main?id='+item.id+'&className='+item.name })
     },
     onGoAssistant(){
-      wx.navigateTo({ url: '/pages/assistant/main' })
+      wx.navigateTo({ url: '/pages/self-center/assistant/main' })
     },
     onGoAppointment(){
       wx.navigateTo({ url: '/pages/appointment/main' })
@@ -159,6 +159,8 @@ export default {
         wx.setStorageSync('x-avatar', res.data.data.avatar)
         wx.setStorageSync('x-phone', res.data.data.phone == ''? res.data.data.phone : 0)
         wx.setStorageSync('x-name', res.data.data.nickName)
+        wx.setStorageSync('x-gender', user_info.gender)
+        wx.setStorageSync('x-city', user_info.province + '-' + user_info.city)
       })
     },
     getWxUser(){
