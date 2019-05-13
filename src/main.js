@@ -7,13 +7,18 @@ http.init({
 })
 http.interceptors.request.use(config => {
   console.log(config)
-  config.headers['token'] = wx.getStorageSync('x-token');
-  config.headers['Authorization'] = wx.getStorageSync('x-token');
+  const token = wx.getStorageSync('x-token');
+  // if(!token){
+  //   wx.navigateTo({ url: '/pages/wechatAuthLogin/main'})
+  // }
+  config.headers['token'] = token;
+  config.headers['Authorization'] = token;
   return config
 })
 http.interceptors.response.use(response => {
   if(response.data.status == '1404'){
     console.log('未登录', response.data.msg)
+    wx.navigateTo({ url: '/pages/wechatBindPhone/main'})
   }
   console.log(response, wx)
   return response

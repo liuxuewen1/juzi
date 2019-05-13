@@ -7,71 +7,95 @@
         <!-- <i class="jiantou"></i> -->
       </h3>
       <p>{{addr}}</p>
-      <span class="nextAddr" @click="onClick">重新定位</span>
+      <span class="nextAddr" @click="onAgain">重新定位</span>
     </div>
     <div class="nearbyStudio">
       <h3 class="tit">附近的影棚</h3>
       <ul>
-        <li v-for="(item,index) in data" :key="index">
-          <img :src="item.imgUrl" alt="" class="nearImg">
+        <li v-for="item in addressList" :key="item.id">
+          <img :src="item.image" alt="" class="nearImg">
           <div class="center">
             <h3>{{item.name}}</h3>
-            <p class="address">{{item.addr}}</p>
+            <p class="address">{{item.address}}</p>
             <p class="info">{{item.info}}</p>
           </div>
-          <div class="radio">
-            <input type="radio" v-model="picked" :value="item.id">
-            <!-- <label for="study"></label> -->
-          </div>
+          <div :class="{'radio': true, 'radio-active': item.is_active }" @click="onChoseStudio(item)"></div>
         </li>
       </ul>
-      <p class="sureStudio">确认预约</p>
+      <p class="sureStudio" @click="onSubmitStudio">确认选择</p>
     </div>
   </div>
 </template>
 
 <script>
+import { promisify } from '@/utils/index' 
 export default {
-  // props: ['text','imgSrc','tit','describe','id'],
+  props: ['onSubmit', 'mchId'],
   data () {
     return {
-      // width: this.width,
-      // text: this.text，
-      picked:"0000",
-      addr:"dddddddd",
-      data:[
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          addr:"ggggggggg",
-          info:"sdddddddddddd",
-          id:"11111"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          addr:"ggggggggg",
-          info:"sdddddddddddd",
-          id:"2222"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          addr:"ggggggggg",
-          info:"sdddddddddddd",
-          id:"33333"
-        }
-      ]
+      longitude: 0, 
+      latitude: 0,
+      addressList: [],
+      addr:""
     }
   },
+  computed: {
+  },
   methods: {
-    onClick(){
-      wx.openLocation({
-        longitude: this.latitude*1,
-        latitude: this.longitude*1,
-        scale: 14
+    getCurLocation(){
+      this.$http.get('/wechat/user/getLocation?longitude='+this.longitude+'&latitude='+this.latitude).then(res => {
+        this.addr = res.data.data.address;
       })
+    },
+    getDataAddress(){
+      this.$http.get('/wechat/merchant/nearlist?longitude='+this.longitude+'&latitude='+this.latitude).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          data.data.merchantList.forEach(item => {
+            item.is_active = false;
+            if(item.id == this.mchId) item.is_active = true;
+          })
+          this.addressList = data.data.merchantList;
+          this.addr = data.data.userAddress;
+        }
+      })
+    },
+    getLocation(){
+      return promisify(wx.getSetting)().then(res => {
+        if (!res.authSetting['scope.userLocation']) {
+          promisify(wx.authorize)({
+            scope: 'scope.userLocation'
+          }).then(res => {
+            return this.setLocation();
+          });
+        }else{
+          return this.setLocation();
+        }
+      });
+    },
+    setLocation(){
+      return promisify(wx.getLocation)()
+    },
+    onChoseStudio(item){
+      item.is_active = !item.is_active;
+      this.onSubmit('Studio', this.addressList.filter(item => item.is_active === true), true);
+    },
+    onAgain(){
+      this.getLocation().then((res) => {
+        this.longitude = res.longitude;
+        this.latitude = res.latitude;
+        this.getDataAddress();
+      })
+    },
+    onSubmitStudio(){
+      this.onSubmit('Studio', this.addressList.filter(item => item.is_active === true))
     }
+  },
+  onShow(){
+    console.log('show')
+  },
+  onLoad(){
+    this.onAgain();
   },
   components:{}
 }
@@ -131,6 +155,9 @@ export default {
 .nearbyStudio{
   padding: 23rpx 30rpx;
 }
+.nearbyStudio ul{
+  height: 530rpx;
+}
 .nearbyStudio .tit{
   height: 40rpx;
   line-height: 40rpx;
@@ -154,6 +181,7 @@ export default {
   height: 40rpx;
   font-size: 24rpx;
   color: #333;
+  max-width: 600rpx;
 }
 .nearbyStudio .info{
   height: 24rpx;
@@ -178,10 +206,17 @@ export default {
 }
 .radio{
   position: absolute;
-  right: 45rpx;
+  right: 35rpx;
   top: 74rpx;
   width: 30rpx;
   height: 30rpx;
+  border-radius: 50%;
+  border: 1px solid #666;
+}
+.radio-active{
+  border: none;
+  background: #fff url("../../static/image/icon/chose.png") 0 0 no-repeat;
+  background-size: cover;
 }
 .radio .radioInput{
   width: 30rpx;

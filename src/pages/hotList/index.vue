@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <!-- <a href="#" class="goPre"><i></i>二次元</a> -->
+    <div class="title">
+      <h3 @click="onGetData('great')" :class="{active: active == 'great'}">推荐</h3>
+      <h3 @click="onGetData('hot')" :class="{active: active == 'hot'}">热门</h3>
+    </div>
     <div class="cont">
       <classification
         v-for="item in data"
@@ -19,7 +23,8 @@ export default {
   data () {
     return {
       id: 0,
-      data: []
+      data: [],
+      active: 'hot'
     }
   },
   mounted(){},
@@ -27,27 +32,61 @@ export default {
     classification
   },
   methods: {
-    getCateData(){
-      this.$http.get('/wechat/package/getbycateid?cateId='+this.id).then(res => {
+    onGetData(type){
+      this.active = type;
+      this.getData();
+    },
+    getHotData(){
+      this.$http.get('/wechat/package/hotlist').then(res => {
         const data = res.data;
         if(data.status == 1000){
           this.data = data.data.packageList;
         }
+
       })
     },
-    
+    getGreatData(){
+      this.$http.get('/wechat/package/greatlist').then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          this.data = data.data.packageList;
+        }
+
+      })
+    },
+    getData(){
+      if(this.active === 'hot'){
+        this.getHotData();
+      }else if(this.active === 'great'){
+        this.getGreatData();
+      }
+    }
   },
   onLoad (options) {
-    this.id = options.id;
-    wx.setNavigationBarTitle({
-      title: options.className 
-    })
-    this.getCateData();
+    this.active = options.active;
+    this.getData();
   }
 }
 </script>
 
 <style scoped>
+.title{
+  width: 260rpx;
+  margin: 0 auto;
+}
+.title h3{
+  float: left;
+  width: 130rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #999;
+  text-align: center;
+  font-size: 32rpx;
+}
+.title h3.active{
+  color: #ed50a3;
+  border-bottom: 1px solid #ed50a3;
+}
 img{
   display: block;
 }

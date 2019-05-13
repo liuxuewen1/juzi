@@ -49,12 +49,18 @@ export default {
           } 
         })
       }).then(res => {
+        console.log(res, 'token')
         wx.setStorageSync('x-token', res.data.data.token)
+        wx.setStorageSync('x-avatar', res.data.data.avatar)
+        if(res.data.data.phone == '') wx.setStorageSync('x-phone', res.data.data.phone)
+        wx.setStorageSync('x-name', res.data.data.nickName)
+        wx.navigateBack({ delta: 1 });
       })
     },
 
   },
   onLoad(options){
+    wx.removeStorageSync('x-token')
   }
 }
 </script>

@@ -1,23 +1,42 @@
 <template>
-  <div class="menu">
-    <div class="left"><span></span><br>咨询</div>
-    <div class="center" @click="goAppoint">预约拍摄</div>
-    <div class="right" @click="collectionFn"><span :class="isstore?'orange':''"></span><br>收藏</div>
-
+  <div class="bottom-box">
+    <div class="menu" v-if="!showAppoint">
+      <div class="left" @click="onMakePhone"><span></span><br>咨询</div>
+      <div class="center" @click="goAppoint">立即拍摄</div>
+      <div class="right" @click="collectionFn"><span :class="isstore?'orange':''"></span><br>收藏</div>
+    </div>
+    <appoint 
+      v-if="showAppoint" 
+      :id="packageid"
+      :callback="succCallback"
+    />
+    <div :class="{ shadow: showAppoint}" @click="onClosePopup"></div>
   </div>
-  
 </template>
 
 <script>
+import appoint from "@/components/details-appoint";
 export default {
   props: ['packageid', 'isstore'],
   data () {
     return {
+      showAppoint: false,
       backIds: '2',
       mchId: '2'
     }
   },
   methods:{
+    onMakePhone(){
+      wx.makePhoneCall({
+        phoneNumber: '400-8888-8888'
+      })
+    },
+    succCallback(){
+      this.showAppoint = false;
+    },
+    onClosePopup(){
+      this.showAppoint = false;
+    },
     collectionFn(){
       this.$http.get(`/wechat/package/store?id=${this.packageid}&store=${!this.isstore? 1 : 0}`).then(res => {
         if(res.data.status == 1000){
@@ -31,18 +50,19 @@ export default {
       // wx.redirectTo({ url })
     },
     goAppoint(){
+      this.showAppoint = true;
       // this.gotoSucc();
-      this.onAppoint();
+      // this.onAppoint();
     },
     onAppoint(){
-      const params = `packageId=${this.packageid}&backIds=${this.backIds}&mchId=${this.mchId}`;
-      this.$http.get('/wechat/user/subOrder?' + params).then(res => {
-        const data = res.data;
-        if(data.status == 1000){
-          this.detail = data.data;
-          console.log(this.detail)
-        }
-      })
+      // const params = `packageId=${this.packageid}&backIds=${this.backIds}&mchId=${this.mchId}`;
+      // this.$http.get('/wechat/user/subOrder?' + params).then(res => {
+      //   const data = res.data;
+      //   if(data.status == 1000){
+      //     this.detail = data.data;
+      //     console.log(this.detail)
+      //   }
+      // })
     }
   },
   mounted(){
@@ -51,6 +71,9 @@ export default {
     }).then(res => {
       console.log(res)
     })
+  },
+  components: {
+    appoint
   }
 }
 </script>
@@ -102,5 +125,14 @@ export default {
   color: #fff;
   line-height: 70rpx;
   border-radius: 6rpx;
+}
+.shadow{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  z-index: 10;
 }
 </style>

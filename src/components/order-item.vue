@@ -17,8 +17,8 @@
           </div>
         </div>
         <guide 
-          :latitude="data.latitude" 
-          :longitude="data.longitude" 
+          :longitude="data.latitude" 
+          :latitude="data.longitude" 
           :addr="data.merchantName"
         />
     </div>

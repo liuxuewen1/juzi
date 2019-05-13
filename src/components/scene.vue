@@ -2,76 +2,68 @@
   <div class="studio">
     <div class="nearbyStudio">
       <h3 class="tit">
-        <input type="radio" v-model="picked" value="000">
+        <!-- <input type="radio" @click="onClickAll" v-model="picked" value="000"> -->
+        <div :class="{'radio': true, 'radio-active': count === bannerList.length, 'radio-all': true }" @click="onChoseScene()"></div>
         <span>全选</span>
-        <p class="titRight">已选择您想拍的场景数量：<span class="redColor">1</span></p>
+        <p class="titRight">已选择您想拍的场景数量：<span class="redColor">{{count}}</span></p>
       </h3>
       <ul>
-        <li v-for="(item,index) in data" :key="index">
-          <img :src="item.imgUrl" alt="" class="nearImg">
-          <div class="radio">
-            <input type="radio" v-model="picked" :value="item.id">
-            <!-- <label for="study"></label> -->
-          </div>
+        <li v-for="item in bannerList" :key="item.id">
+          <img :src="item.imgPath" alt="" class="nearImg">
+          <div :class="{'radio': true, 'radio-active': item.is_active }" @click="onChoseScene(item)"></div>
         </li>
       </ul>
-      <p class="sureStudio">确认预约</p>
+      <p class="sureStudio" @click="onSubmitScene">确认选择</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  // props: ['text','imgSrc','tit','describe','id'],
+  props: ['id', 'onSubmit', 'checked'],
   data () {
     return {
-      // width: this.width,
-      // text: this.text，
-      picked:"0000",
-      addr:"dddddddd",
-      data:[
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"11111"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"2222"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"33333"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"33333"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"33333"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"33333"
-        },
-        {
-          imgUrl:"/static/image/banner01.jpg",
-          name:"ddd",
-          id:"33333"
-        }
-      ]
+        bannerList: []
+      }
+  },
+  computed: {
+    count(){
+      return this.bannerList.filter(item => item.is_active === true).length;
     }
   },
   methods: {
-    
+    getData(){
+      this.$http.get('/wechat/package/detail?id=' + this.id).then(res => {
+        const data = res.data;
+        if(data.status == 1000){
+          let checkedIds = [];
+          this.checked.forEach(item => checkedIds.push(item.id))
+          data.data.bannerList.forEach(item => {
+            item.is_active = checkedIds.includes(item.id)? true : false;
+          })
+          this.bannerList = data.data.bannerList;
+        }
+      })
+    },
+    onChoseScene(item){
+      if(!item){
+        const res = this.count == this.bannerList.length;
+        this.bannerList.forEach(item => item.is_active = res? false : true);
+        this.onSubmit('Scene', this.bannerList.filter(item => item.is_active === true), true)
+        return;
+      }else{
+        item.is_active = !item.is_active;
+        this.onSubmit('Scene', this.bannerList.filter(item => item.is_active === true), true)
+      }
+    },
+    onSubmitScene(){
+      this.onSubmit('Scene', this.bannerList.filter(item => item.is_active === true))
+    }
   },
-  components:{}
+  components:{},
+  onLoad(options){
+    this.getData();
+  }
 }
 </script>
 
@@ -98,6 +90,7 @@ export default {
   overflow: hidden;
   padding: 0 8rpx;
   margin-bottom: 44rpx;
+  min-height: 630rpx;
 }
 .nearbyStudio li{
   height: 200rpx;
@@ -125,8 +118,23 @@ export default {
 }
 .radio{
   position: absolute;
+  width: 44rpx;
+  height: 44rpx;
+  background-color: #fff;
   right:10rpx;
   top: 10rpx;
+  border-radius: 50%;
+  border: 1px solid #666;
+}
+.radio-active{
+  border: none;
+  background: #fff url("../../static/image/icon/chose.png") 0 0 no-repeat;
+  background-size: cover;
+}
+.radio-all{
+  position: initial;
+  float: left;
+  margin-right: 8rpx;
 }
 .radio .radioInput{
   /* width: 30rpx;

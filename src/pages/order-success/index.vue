@@ -8,8 +8,8 @@
     </div>
     <guide 
       :addr="data.merchantInfo.address"
-      :latitude="data.merchantInfo.latitude"
-      :longitude="data.merchantInfo.longitude"
+      :longitude="data.merchantInfo.latitude"
+      :latitude="data.merchantInfo.longitude"
     />
     <div class="rule">
       <img src="../../../static/image/rule.jpg" alt="">
@@ -24,7 +24,7 @@ export default {
   data(){
     return {
       id: 0,
-      data: {}
+      data: { merchantInfo: {} }
     }
   },
   computed: {

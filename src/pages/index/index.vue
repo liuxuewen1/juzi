@@ -25,7 +25,7 @@
       </div>
       <div class="menu-container" ref="menuContainer">    
         <ul class="classList">
-          <li v-for="item in classType" :key="item.key">
+          <li @click="onGoClassDetail(item)" v-for="item in classType" :key="item.key">
             <span class="imgIcon" :style="{'backgroundImage': 'url('+item.imgPath+')'}"></span>
             <h3>{{item.name}}</h3>
           </li>
@@ -33,10 +33,10 @@
       </div>
       <ul class="method">
         <li @click="onGoAssistant"><i class="first"></i><span>拍摄助手</span></li>
-        <li @click="onGoAppointment"><i class="second"></i><span>预约拍摄</span></li>
+        <li @click="onGoAppointment"><i class="second"></i><span>立即拍摄</span></li>
       </ul>
       <div class="innerItem" v-if="hotData.packageList.length">
-        <h3>{{hotData.title}}推荐<span>查看更多<i></i></span></h3>
+        <h3>{{hotData.title}}推荐<span @click="onGoMore('hot')">查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
             <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in hotData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="innerItem" v-if="jxData.packageList.length">
-        <h3>{{jxData.title}}推荐<span>查看更多<i></i></span></h3>
+        <h3>{{jxData.title}}推荐<span @click="onGoMore('great')">查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
             <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in jxData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
@@ -90,6 +90,12 @@ export default {
   mounted(){},
   components: {},
   methods: {
+    onGoMore(type){
+      wx.navigateTo({ url: '/pages/hotList/main?active='+type })
+    },
+    onGoClassDetail(item){
+      wx.navigateTo({ url: '/pages/classDetails/main?id='+item.id+'&className='+item.name })
+    },
     onGoAssistant(){
       wx.navigateTo({ url: '/pages/assistant/main' })
     },
@@ -109,8 +115,8 @@ export default {
       })
     },
     toDetail () {
-      const url = '../details/main'
-      wx.navigateTo({ url })
+      // const url = '../details/main'
+      // wx.navigateTo({ url })
     },
     toClass () {
       const url = '../classDetails/main'
@@ -148,7 +154,11 @@ export default {
           } 
         })
       }).then(res => {
+        console.log(res, 333311)
         wx.setStorageSync('x-token', res.data.data.token)
+        wx.setStorageSync('x-avatar', res.data.data.avatar)
+        wx.setStorageSync('x-phone', res.data.data.phone == ''? res.data.data.phone : 0)
+        wx.setStorageSync('x-name', res.data.data.nickName)
       })
     },
     getWxUser(){
@@ -205,13 +215,18 @@ export default {
     },
   },
 
-  onLoad() {
+  onShow(){
+    console.log('index-show')
+    if(!wx.getStorageSync('x-token')){
+      wx.navigateTo({ url: '/pages/wechatAuthLogin/main'})
+      return;
+    }
     this.getClassType();
     this.getList();
-    // 调用应用实例的方法获取全局数据
-    // this.login()
-    this.getLocation();
     this.getBanner();
+  },
+  onLoad() {
+    console.log('index-load')
   }
 }
 </script>

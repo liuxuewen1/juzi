@@ -22,7 +22,14 @@ export default {
         console.log(detail.iv)
         console.log(detail.encryptedData,1111)
         this.$http.post(`/wechat/user/bindPhone?encryptedData=${detail.encryptedData}&iv=${detail.iv}`).then(res => {
-          console.log(res)
+          console.log(res.data.data)
+          const data = res.data;
+          if(data.status == 1000){
+            wx.navigateBack({ delta: 1 });
+            wx.setStorageSync('x-phone', res.data.data.phone)
+          }else{
+            wx.navigateTo({ url: '/pages/wechatAuthLogin/main'});
+          }
         })
       }
     },

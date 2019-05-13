@@ -2,21 +2,21 @@
   <div class="center-warp">
     <img src="/static/image/bg.jpg" alt="" class="imageBttom">
     <div class="cont">
-      <div class="user">
+      <div class="user" v-if="!phone">
         <div class="user-top">
           <img src="/static/image/icon/head-nologin.png" alt="">
         </div>
         <a class="login" @click="onLogin">立即登录</a>
       </div>
-      <div class="user" style="display:none">
+      <div class="user" v-if="phone">
         <div class="user-top">
-          <img src="/static/image/icon/head-nologin.png" alt="">
+          <img :src="avatar" alt="">
         </div>
-        <p>username</p>
+        <p>{{username}}</p>
       </div>
       <ul class="user-info mb30">
         <li>个人信息<i></i></li>
-        <li @click="onClickGo('photo')">我的相册<i></i></li>
+        <!-- <li @click="onClickGo('photo')">我的相册<i></i></li> -->
         <li @click="onClickGo('order')">我的订单<i></i></li>
         <li @click="onClickGo('collection')">我的收藏<i></i></li>
       </ul>
@@ -63,6 +63,9 @@
 export default {
   data(){
     return {
+      avatar: '',
+      phone: 0,
+      username: '',
       pageCollection: 1,
       pageOrder: 1,
       collectionData: [],
@@ -125,6 +128,11 @@ export default {
         this.getOrderList();
       }
       this.active_tab = tab;
+    },
+    setInfo(){
+      this.phone = wx.getStorageSync('x-phone');
+      this.avatar = wx.getStorageSync('x-avatar');
+      this.username = wx.getStorageSync('x-name');
     }
   },
   components: {
@@ -136,6 +144,14 @@ export default {
   },
   onTabItemTap(item) {
     // this.changeTab(this.active_tab)
+  },
+  onShow(){
+      console.log('show',111)
+    this.setInfo();
+  },
+  onLoad(options){
+      console.log('load',111)
+    this.setInfo();
   }
 }
 </script>

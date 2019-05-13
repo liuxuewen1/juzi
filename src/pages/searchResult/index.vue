@@ -7,6 +7,7 @@
         :height="320" 
         :text="item.bgNumber" 
         :img-src="item.imgPath" 
+        :id="item.id"
         :tit="item.name"
       />
     </div>

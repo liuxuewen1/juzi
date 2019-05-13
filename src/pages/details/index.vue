@@ -1,6 +1,6 @@
 <template>
   <div class="container conBox" @click="clickHandle('test click', $event)">
-    <!-- <a href="#" class="goPre"><i></i>嗨拍照片商城</a> -->
+    <!-- <a href="#" class="goPre"><i></i>美景成真照片商城</a> -->
     <div class="banner">
       <swiper :indicator-dots="indicatorDots" 
         :autoplay="autoplay" 
@@ -29,17 +29,17 @@
       <div class="contItem">
         <h3 class="itemTit"><i>同类作品展示</i><span></span></h3>
         <div class="itemImg">
-          <div class="itemImgLi" v-for="(item,index) in imgUrls" :key="index"><img :src="item" alt=""/></div>
+          <div class="itemImgLi" v-for="item in detail.packageList" :key="item.id"><img :src="item.imgPath" alt=""/></div>
         </div>
       </div>
       <div class="contItem">
         <h3 class="itemTit"><i>玩法介绍</i><span></span></h3>
         <div class="itemLast">
           <image src="/static/image/flow.jpg" alt="" style="width:100%;display: block;" mode="widthFix"/>
-          <p>预约完成后获得二维码，找到附近的嗨拍全方位激光数字影棚；</p>
+          <p>预约完成后获得二维码，找到附近的美景成真全方位激光数字影棚；</p>
           <p>在影棚扫一扫预约二维码，按照工作人员的指引，即可开始您的拍摄旅程；</p>
           <p>您可按照我们的样片进行拍摄，也可自创拍摄动作；</p>
-          <p>付费并拍摄完成后，即可在小程序内看到您的照片；</p>
+          <p>拍摄完成后，即可在小程序内看到您的照片；</p>
         </div>
       </div>
     </div>
@@ -50,8 +50,8 @@
       @goNext="clickActive" 
       :active-index="0">
     </bottom-menu>
-    <div class="menu">
-      <div class="chose" @click="onChose">选择套系</div>
+    <div class="menu" v-if="isChose == 1">
+      <div class="chose" @click="onChose(detail.name)">选择套系</div>
     </div>
   </div>
 </template>
@@ -70,11 +70,6 @@ export default {
       interval: 5000,
       duration: 900,
       circular: true,
-      imgUrls: [
-        '/static/image/banner01.jpg',
-        '/static/image/banner01.jpg',
-        '/static/image/smallimg.jpg'
-      ],
       motto: 'Hello World',
       imgTit: '青春年华套图',
       describe: '科技风',
@@ -91,12 +86,14 @@ export default {
   },
 
   methods: {
-    onChose(){},
+    onChose(name){
+      wx.redirectTo({ url: '/pages/appointment/main?id='+this.id+'&name='+name })
+    },
     swiperChange(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
+      // console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
     },
     animationfinish(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
+      // console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
     },
     clickActive(index){
       console.log(index);
@@ -121,16 +118,11 @@ export default {
         const data = res.data;
         if(data.status == 1000){
           this.detail = data.data;
-          console.log(this.detail)
+          wx.setNavigationBarTitle({
+            title: this.detail.name 
+          })
         }
       })
-      // this.$http.get('/wechat/user/orderDetail?orderId=2').then(res => {
-      //   const data = res.data;
-      //   if(data.status == 1000){
-      //     this.detail = data.data;
-      //     console.log(this.detail)
-      //   }
-      // })
     }
   },
 
@@ -140,7 +132,7 @@ export default {
   },
   onLoad(options) {
     this.id = options.id;
-    this.isChose = options.chose; //0-非选择套餐 1-选择套餐
+    this.isChose = options.chose == 1? 1 : 0; //0-非选择套餐 1-选择套餐
   },
   mounted(){
     this.getData()

@@ -21,14 +21,15 @@
     "pages/assistant/main",
     "pages/appointment/main",
     "pages/searchResult/main",
-    "pages/series/main"    
+    "pages/series/main",
+    "pages/hotList/main"    
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "嗨拍"
+    "navigationBarTitleText": "美景成真"
   },
   "permission": {
     "scope.userLocation": {
