@@ -37,6 +37,7 @@ export default {
         const data = res.data;
         if(data.status == 1000){
           let checkedIds = [];
+          // data.data.bannerList = data.data.bannerList.concat(data.data.bannerList);
           this.checked.forEach(item => checkedIds.push(item.id))
           data.data.bannerList.forEach(item => {
             item.is_active = checkedIds.includes(item.id)? true : false;
@@ -87,7 +88,7 @@ export default {
   font-size: 24rpx;
 }
 .nearbyStudio ul{
-  overflow: hidden;
+  overflow: auto;
   padding: 0 8rpx;
   margin-bottom: 44rpx;
   min-height: 630rpx;
