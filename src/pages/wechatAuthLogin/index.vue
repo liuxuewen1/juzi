@@ -52,7 +52,7 @@ export default {
         console.log(res, 'token')
         wx.setStorageSync('x-token', res.data.data.token)
         wx.setStorageSync('x-avatar', res.data.data.avatar)
-        if(res.data.data.phone == '') wx.setStorageSync('x-phone', res.data.data.phone)
+        if(res.data.data.phone != '') wx.setStorageSync('x-phone', res.data.data.phone)
         wx.setStorageSync('x-name', res.data.data.nickName)
         wx.setStorageSync('x-gender', user_info.gender)
         wx.setStorageSync('x-city', user_info.province + '-' + user_info.city)

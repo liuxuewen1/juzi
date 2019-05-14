@@ -1,6 +1,6 @@
 <template>
     <div class="order-item">
-        <div class="top" @click="onClick">
+        <div class="top">
           <p class="date">{{data.updateTime}}</p>
           <div class="content">
             <div class="img">
@@ -12,8 +12,12 @@
               <p class="status">{{data.shotState==0? '未拍摄': '已拍摄'}}</p>
             </div>
             <div class="qrcode">
-              <img :src="data.qrcode" alt="">
+              <span v-if="data.shotState==0" @click="onClick">查看二维码</span>
+              <span v-if="data.shotState==1">查看照片</span>
             </div>
+            <!-- <div class="qrcode" >
+              <img :src="data.qrcode" alt="">
+            </div> -->
           </div>
         </div>
         <guide 
@@ -90,6 +94,13 @@ export default {
 .qrcode{
   margin-left: auto;
   margin-right: 20rpx;
+  align-self: center;
+}
+.qrcode span{
+  font-size: 28rpx;
+  background-color: #e97d53;
+  padding: 10rpx 14rpx;
+  color: #fff;
 }
 .qrcode img{
   width: 158rpx;
