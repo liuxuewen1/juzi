@@ -72,6 +72,9 @@ export default {
       console.log(res)
     })
   },
+  onLoad(){
+    this.showAppoint = false;
+  },
   components: {
     appoint
   }

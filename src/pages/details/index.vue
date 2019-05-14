@@ -10,8 +10,8 @@
         @change="swiperChange" 
         @animationfinish="animationfinish" style="height: 400rpx;">
         <div v-for="item in detail.bannerList" :key="item.id">
-          <swiper-item>
-            <image :src="item.imgPath" class="slide-image"/>
+          <swiper-item @click="onShowBig(item.imgPath)">
+            <image mode='aspectFill' :src="item.imgPath" class="slide-image"/>
           </swiper-item>
         </div>
       </swiper>
@@ -75,7 +75,7 @@ export default {
       describe: '科技风',
       userInfo: {},
       smallImg: require("../../../static/image/bigimg.jpg"),
-      detail: {}
+      detail: { bannerList: [] }
     }
   },
   components: {
@@ -86,6 +86,14 @@ export default {
   },
 
   methods: {
+    onShowBig(cur){
+      let arrImg = [];
+      this.detail.bannerList.forEach(item => arrImg.push(item.imgPath));
+      wx.previewImage({
+        current: cur, // 当前显示图片的http链接
+        urls: arrImg // 需要预览的图片http链接列表
+      })
+    },
     onChose(name){
       wx.redirectTo({ url: '/pages/appointment/main?id='+this.id+'&name='+name })
     },

@@ -9,7 +9,7 @@
       </h3>
       <ul>
         <li v-for="item in bannerList" :key="item.id">
-          <img :src="item.imgPath" alt="" class="nearImg">
+          <img :src="item.imgPath" alt="" class="nearImg" @click="onShowBig(item.imgPath)">
           <div :class="{'radio': true, 'radio-active': item.is_active }" @click="onChoseScene(item)"></div>
         </li>
       </ul>
@@ -32,6 +32,14 @@ export default {
     }
   },
   methods: {
+    onShowBig(cur){
+      let arrImg = [];
+      this.bannerList.forEach(item => arrImg.push(item.imgPath));
+      wx.previewImage({
+        current: cur, // 当前显示图片的http链接
+        urls: arrImg // 需要预览的图片http链接列表
+      })
+    },
     getData(){
       this.$http.get('/wechat/package/detail?id=' + this.id).then(res => {
         const data = res.data;

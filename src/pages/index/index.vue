@@ -10,7 +10,11 @@
         @animationfinish="animationfinish" style="height: 400rpx;">
         <div v-for="(item,index) in bannerData" :key="index">
           <swiper-item @click="toDetail">
-            <image :src="item.imgPath" class="slide-image"/>
+            <image 
+              mode='aspectFill' 
+              :src="item.imgPath" 
+              class="slide-image"
+            />
           </swiper-item>
         </div>
       </swiper>
