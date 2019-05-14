@@ -8,6 +8,7 @@
         :img-src="item.imgPath" 
         :tit="item.name"
         :id="item.id"
+        :key="item.id"
       />
     </div>
   </div>
