@@ -1,6 +1,6 @@
 <template>
   <div class="conBox">
-    <div class="cont" v-if="result.length">
+    <div class="cont" v-if="!isLoading && result.length">
       <classification 
         v-for="item in result"
         :key="item.name"
@@ -12,30 +12,35 @@
         :tit="item.name"
       />
     </div>
-    <no-photos v-else-if="!result.length" tit="没搜索到您要的结果～" text=""></no-photos>
+    <no-photos v-else-if="!isLoading && !result.length" tit="没搜索到您要的结果～" text=""></no-photos>
+    <loadinga v-if="isLoading" />
   </div>
 </template>
 
 <script>
 import classification from '@/components/classification' //大图
 import noPhotos from '@/components/noPhotos' //无照片
+import loadinga from '@/components/loading'
 export default {
   data () {
     return {
       page: 1,
       key: '',
-      result: []
+      result: [],
+      isLoading: true
     }
   },
   components: {
     classification,
-    noPhotos
+    noPhotos,
+    loadinga
   },
 
   methods: {
     getData(){
       const params = `page=${this.page}&pageSize=20&key=${this.key}`;
       this.$http.get(`/wechat/search/resultlist?${params}`).then(res => {
+        this.isLoading = false;
         const data = res.data;
         if(data.status == 1000){
           this.result = data.data.packageList;
@@ -49,6 +54,8 @@ export default {
   },
   onLoad(options) {
     this.key = options.key;
+    this.result = [];
+    this.isLoading = true;
     this.getData();
   },
 }

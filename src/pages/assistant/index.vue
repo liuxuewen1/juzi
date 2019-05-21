@@ -5,7 +5,7 @@
       <ul class="use-list">
         <li :class="index%2==0?'':'floatRight'" v-for="(item,index) in useStep" :key="index">
           <div class="top">
-            <img :src="item.imgUrl" alt="">
+            <img mode='aspectFill' :src="item.imgUrl" alt="">
             <span>{{index+1}}</span>
           </div>
           <p>{{item.test}}</p>
@@ -16,7 +16,7 @@
       <h3>拍摄小技巧</h3>
       <ul class="skill-list">
         <li>
-          <img src="/static/image/banner01.jpg" alt="">
+          <img mode='aspectFill' src="/static/image/banner01.jpg" alt="">
           <p>玩心大作战</p>
         </li>
       </ul>

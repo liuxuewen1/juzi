@@ -51,6 +51,7 @@ export default {
                     signType: data.signType,
                     timeStamp: data.timeStamp,
                     success(payRes){
+                        // wx.showToast({ title: '购买成功~' });
                         console.log(payRes)
                         that.getImage();
                     },

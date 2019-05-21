@@ -12,14 +12,14 @@
     <div class="nearbyStudio">
       <h3 class="tit">附近的影棚</h3>
       <ul>
-        <li v-for="item in addressList" :key="item.id">
-          <img :src="item.image" alt="" class="nearImg">
+        <li v-for="item in addressList" :key="item.id" @click="onChoseStudio(item)">
+          <img mode='aspectFill' :src="item.image" alt="" class="nearImg">
           <div class="center">
             <h3>{{item.name}}</h3>
             <p class="address">{{item.address}}</p>
             <p class="info">{{item.info}}</p>
           </div>
-          <div :class="{'radio': true, 'radio-active': item.is_active }" @click="onChoseStudio(item)"></div>
+          <div :class="{'radio': true, 'radio-active': item.is_active }"></div>
         </li>
       </ul>
       <p class="sureStudio" @click="onSubmitStudio">确认选择</p>
@@ -63,7 +63,6 @@ export default {
     getLocation(){
       const that = this;
       return promisify(wx.getSetting)().then(res => {
-        // wx.showToast({title: res.authSetting['scope.userLocation'].toString()})
         const scope = res.authSetting['scope.userLocation'];
         if (scope == undefined) {
           promisify(wx.authorize)({

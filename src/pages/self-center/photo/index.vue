@@ -17,7 +17,7 @@
               class="photo-small"
               @click="onGoImage(image, item.orderId)"
             />
-            <img v-if="image.isBuy==1" class="buy-icon" src="/static/image/icon/has_buy.png" alt="">
+            <img mode='aspectFill' v-if="image.isBuy==1" class="buy-icon" src="/static/image/icon/has_buy.png" alt="">
           </li>
         </ul>
       </div>

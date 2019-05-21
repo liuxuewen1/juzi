@@ -43,7 +43,7 @@
         <h3>{{hotData.title}}推荐<span @click="onGoMore('hot')">查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
-            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in hotData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in hotData.packageList" :key="item.id"><img mode='aspectFill' :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
           </ul>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <h3>{{jxData.title}}推荐<span @click="onGoMore('great')">查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
-            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in jxData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in jxData.packageList" :key="item.id"><img mode='aspectFill' :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
           </ul>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <h3>{{categoryData.title}}推荐<span>查看更多<i></i></span></h3>
         <div class="innerCont">
           <ul class="innerList mt20">
-            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in categoryData.packageList" :key="item.id"><img :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
+            <li @click="onGoDetail(item.id)" :class="idx%2!=0?'':'mr40'" v-for="(item,idx) in categoryData.packageList" :key="item.id"><img mode='aspectFill' :src="item.imgPath" alt=""><p>{{item.name}}</p></li>
           </ul>
         </div>
       </div>
@@ -115,6 +115,12 @@ export default {
         const data = res.data;
         if(data.status == 1000){
           this.classType = data.data.list;
+          this.classType.length > 7 && (this.classType.length = 7);
+          this.classType.push({
+            id: -1,
+            name: '全部',
+            imgPath: require("../../../static/image/icon/more.png")
+          })
         }
       })
     },
@@ -186,15 +192,15 @@ export default {
     getPhoneNumber(e) {
       const detail = e.mp.detail;
       if(detail.errMsg.indexOf('user deny') === -1){
-        console.log(detail.iv)
-        console.log(detail.encryptedData,1111)
+        // console.log(detail.iv)
+        // console.log(detail.encryptedData,1111)
         this.$http.post(`/wechat/user/bindPhone?encryptedData=${detail.encryptedData}&iv=${detail.iv}`).then(res => {
           console.log(res)
         })
       }
     },
     clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+      // console.log('clickHandle:', msg, ev)
     },
     getList(){
       this.$http.get('/wechat/pageindex/packagelist').then(res => {
@@ -219,20 +225,27 @@ export default {
         console.log(res);
       })
     },
-  },
-
-  onShow(){
-    console.log('index-show')
-    if(!wx.getStorageSync('x-token')){
-      wx.navigateTo({ url: '/pages/wechatAuthLogin/main'})
-      return;
+    init(){
+      if(!wx.getStorageSync('x-token')){
+        wx.navigateTo({ url: '/pages/wechatAuthLogin/main'})
+        return;
+      }
+      this.getClassType();
+      this.getList();
+      this.getBanner();
     }
-    this.getClassType();
-    this.getList();
-    this.getBanner();
   },
   onLoad() {
+    this.init();
     console.log('index-load')
+  },
+  onPullDownRefresh(){
+    wx.showNavigationBarLoading();  //在标题栏中显示加载
+    this.init();
+    setTimeout(() => {
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh(); //停止下拉刷新
+    }, 1000)
   }
 }
 </script>

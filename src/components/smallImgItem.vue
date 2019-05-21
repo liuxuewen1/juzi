@@ -2,7 +2,7 @@
   <div @click="toDetail" class="smallImage">
     <div class="lift">
       <span>{{text}}p</span>
-      <img :src="imgSrc" alt="">
+      <img mode='aspectFill' :src="imgSrc" alt="">
     </div>
     <div class="right">
       <h3>{{tit}}</h3>

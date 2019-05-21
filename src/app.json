@@ -49,7 +49,7 @@
         "pagePath": "pages/index/main",
         "iconPath": "static/image/icon/i-recom-g.jpg",
         "selectedIconPath": "static/image/icon/i-recom-a.jpg",
-        "text": "推荐"
+        "text": "首页"
       },
       {
         "pagePath": "pages/self-center/main",

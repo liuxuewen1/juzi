@@ -13,7 +13,7 @@
       <div v-for="item in data" :key="item.id" @click="toDetail(item)" class="smallImage">
         <div class="itemLift">
           <span>{{item.bgNumber}}p</span>
-          <img :src="item.imgPath" alt="">
+          <img mode='aspectFill' :src="item.imgPath" alt="">
         </div>
         <div class="itemRight">
           <h3>{{item.name}}</h3>

@@ -7,7 +7,7 @@
     </div>
     <ul class="photo">
       <li v-for="(item,index) in order_data" :key="index">
-        <img :src="item.photo" alt="">
+        <img mode='aspectFill' :src="item.photo" alt="">
         <div class="photo-text">
           <span v-if="item.textInfo != ''">{{item.textInfo}}</span>
           <p v-if="item.canDown" class="blue">{{item.size}}MB<span></span></p>

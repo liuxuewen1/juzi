@@ -97,7 +97,7 @@ export default {
       this.$http.get('/wechat/user/subOrder?'+params).then(res => {
         const data = res.data;
         if(data.status == 1000){
-          console.log(data.data.orderId, 666)
+          // console.log(data.data.orderId, 666)
           wx.navigateTo({ url: '/pages/order-success/main?id=' + data.data.orderId });
         }
       })
@@ -134,6 +134,10 @@ export default {
       this.showStudio = false;
     },
     onSubmit(type, list, not_check){
+      if(!not_check && list.length == 0) {
+        wx.showToast({ title: '请选择~', icon: 'none' })
+        return;
+      }
       !not_check && (this['show' + type] = false);
       if(type === 'Scene'){
         this.showSceneArr = list;
@@ -148,7 +152,7 @@ export default {
     onClickChose(type){
       if(type === 'Package'){
         // 套餐
-        wx.redirectTo({ url: '/pages/series/main' })
+        wx.navigateTo({ url: '/pages/series/main' })
       }else if(type === 'Scene'){
         if(!this.packageId){
           wx.showToast({
@@ -194,17 +198,19 @@ export default {
       this.mchId = 0;
     }
   },
-
-  created () {
-    // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
-  },
   onLoad(options) {
+    this.showStudio = false;
+    this.showScene = false;
     this.init();
     this.packageId = options.id;
     this.packageName = options.name;
   },
-  mounted(){},
+  onShow(e){
+    const { id, name } = this.$root.$mp.page.data;
+    if(id && name) {
+      this.packageName = name; this.packageId = id;
+    }
+  },
 }
 </script>
 

@@ -4,20 +4,17 @@
           <p class="date">{{data.updateTime}}</p>
           <div class="content">
             <div class="img">
-              <img :src="data.imgPath" alt="">
+              <img mode='aspectFill' :src="data.imgPath" alt="">
             </div>
             <div class="desc">
               <p class="title">{{data.packName}}</p>
-              <p class="price">{{data.bgNumber}}张</p>
+              <!-- <p class="price">{{data.bgNumber}}张</p> -->
               <p class="status">{{data.shotState==0? '未拍摄': '已拍摄'}}</p>
             </div>
             <div class="qrcode">
               <span v-if="data.shotState==0" @click="onClick">查看二维码</span>
               <span v-if="data.shotState==1" @click="onShowPhoto(data.orderId)">查看照片</span>
             </div>
-            <!-- <div class="qrcode" >
-              <img :src="data.qrcode" alt="">
-            </div> -->
           </div>
         </div>
         <guide 
@@ -102,8 +99,11 @@ export default {
 .qrcode span{
   font-size: 28rpx;
   background-color: #e97d53;
-  padding: 10rpx 14rpx;
+  padding: 20rpx 0rpx;
   color: #fff;
+  display: block;
+  text-align: center;
+  width: 180rpx;
 }
 .qrcode img{
   width: 158rpx;

@@ -47,7 +47,7 @@ export default {
   onTabItemTap(item) {
     // this.changeTab(this.active_tab)
   },
-  onShow(){
+  onLoad(){
     this.page = 1;
     this.orderData = [];
     this.isLoading = true;

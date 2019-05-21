@@ -1,6 +1,6 @@
 <template>
   <div class="center-warp">
-    <img src="/static/image/bg.jpg" alt="" class="imageBttom">
+    <img mode='aspectFill' src="/static/image/bg.jpg" alt="" class="imageBttom">
     <div class="cont">
       <div class="user" v-if="!phone">
         <div class="user-top">
