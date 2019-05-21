@@ -15,42 +15,56 @@
         :key="item.id"
       />
     </div>
+    <loading v-if="isLoading" />
   </div>
 </template>
 
 <script>
 import classification from '@/components/classification' //大图
+import loading from '@/components/loading'
 export default {
   data () {
     return {
       id: 0,
       data: [],
-      active: 'hot'
+      active: 'hot',
+      page: 1,
+      pageSize: 20,
+      totalCount: 0,
+      isLoading: true
     }
   },
   mounted(){},
   components: {
-    classification
+    classification,
+    loading
   },
   methods: {
     onGetData(type){
       this.active = type;
+      this.page = 1;
+      this.data = [];
+      this.isLoading = true;
       this.getData();
     },
     getHotData(){
-      this.$http.get('/wechat/package/hotlist').then(res => {
+      this.$http.get('/wechat/package/hotlist?page='+this.page+'&pageSize='+this.pageSize).then(res => {
         const data = res.data;
+        this.isLoading = false;
         if(data.status == 1000){
-          this.data = data.data.packageList;
+          this.data = this.data.concat(data.data.packageList);
+          this.totalCount = data.data.totalCount;
         }
 
       })
     },
     getGreatData(){
-      this.$http.get('/wechat/package/greatlist').then(res => {
+      this.$http.get('/wechat/package/greatlist?page='+this.page+'&pageSize='+this.pageSize).then(res => {
         const data = res.data;
+        this.isLoading = false;
         if(data.status == 1000){
-          this.data = data.data.packageList;
+          this.data = this.data.concat(data.data.packageList);
+          this.totalCount = data.data.totalCount;
         }
 
       })
@@ -64,8 +78,15 @@ export default {
     }
   },
   onLoad (options) {
-    this.active = options.active;
+    this.active = options.active || 'hot';
+    this.isLoading = true;
     this.getData();
+  },
+  onReachBottom(){
+    if(Math.ceil(this.totalCount/this.pageSize) > this.page){
+      this.page += 1;
+      this.getData();
+    }
   }
 }
 </script>

@@ -14,7 +14,10 @@ export default {
     return {
       keywords: [],
       key: '',
-      result: []
+      result: [],
+      page: 1,
+      pageSize: 20,
+      totalCount: 0
     }
   },
   components: {
@@ -24,7 +27,7 @@ export default {
 
   methods: {
     getHotKeywords(){
-      this.$http.get('/wechat/search/hotkeywords').then(res => {
+      this.$http.get('/wechat/search/hotkeywords?page='+this.page+'&pageSize='+this.pageSize).then(res => {
         const data = res.data;
         if(data.status == 1000){
           this.keywords = data.data.list;

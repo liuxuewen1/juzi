@@ -9,7 +9,7 @@
       </h3>
       <ul>
         <li v-for="item in bannerList" :key="item.id">
-          <img :src="item.imgPath" alt="" class="nearImg" @click="onShowBig(item.imgPath)">
+          <img mode='aspectFill' :src="item.imgPath" alt="" class="nearImg" @click="onShowBig(item.imgPath)">
           <div :class="{'radio': true, 'radio-active': item.is_active }" @click="onChoseScene(item)"></div>
         </li>
       </ul>
@@ -96,10 +96,10 @@ export default {
   font-size: 24rpx;
 }
 .nearbyStudio ul{
-  overflow: auto;
+  overflow: scroll;
   padding: 0 8rpx;
   margin-bottom: 44rpx;
-  min-height: 630rpx;
+  height: 630rpx;
 }
 .nearbyStudio li{
   height: 200rpx;

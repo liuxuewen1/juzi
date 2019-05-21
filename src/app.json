@@ -11,6 +11,7 @@
     "pages/self-center/personal/main",
     "pages/self-center/complaint/main",
     "pages/self-center/assistant/main",
+    "pages/self-center/buyImage/main",
     "pages/order-success/main",
     "pages/location/main",
     "pages/details/main",

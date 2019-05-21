@@ -3,7 +3,8 @@
     <!-- <a href="#" class="goPre"><i></i>我的订单</a> -->
     <h2 class="title">预约成功！</h2>
     <div class="qrcode">
-      <canvas class='canvas' style="width:168px; height:168px;" canvas-id='canvas' bindlongtap='save'></canvas>
+      <image style="width: 168px; height: 168px;" :src="qrcodeURL"> </image>
+      <!-- <canvas class='canvas' style="width:168px; height:168px;" id="canvasId" canvas-id='canvas' bindlongtap='save'></canvas> -->
       <!-- <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1547392534&di=ae1a3d6c36b1c5084273cc81edfa1f61&src=http://y3.ifengimg.com/news_spider/dci_2013/09/b85234c4801f8b2d7771353867a7a0f8.jpg" alt=""> -->
     </div>
     <guide 
@@ -12,19 +13,25 @@
       :latitude="data.merchantInfo.longitude"
     />
     <div class="rule">
+      <game-rule />
+    </div> 
+    <!-- 
       <img src="../../../static/image/rule.jpg" alt="">
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import guide from '@/components/address-guide.vue'
 import qrcode from '@/utils/weapp-qrcode.js'
+import gameRule from '@/components/gameRule' //
 export default {
   data(){
     return {
       id: 0,
-      data: { merchantInfo: {} }
+      data: { merchantInfo: {} },
+      qrcode: null,
+      qrcodeURL: ''
     }
   },
   computed: {
@@ -33,25 +40,36 @@ export default {
     getDetail(){
       this.$http.get(`/wechat/user/orderDetail?orderId=${this.id}`).then(res => {
         const data = res.data;
-        if(data.status == 1000){
+        if(data.status == 1000 && data.data.qrStr){
           this.data = data.data;
-          new qrcode.QRCode('canvas', {
-              // usingIn: this,
-              width: 168,
-              height: 168,
-              text: data.data.qrStr,
-              correctLevel: qrcode.QRCode.CorrectLevel.H
-          });
+          // this.qrcode && this.qrcode.makeCode(data.data.qrStr);
+          this.qrcodeURL = qrcode.drawImg(data.data.qrStr, {
+            typeNumber: 1,
+            errorCorrectLevel: 'H',
+            size: 168
+          })
+          
         }
       })
     },
   },
   components: {
-    guide
+    guide,
+    gameRule
+  },
+  onShow(){
+    // this.qrcode = new qrcode.QRCode("canvas", {
+    //   text: "",
+    //   width: 168,
+    //   height: 168,
+    //   colorDark : "#000000",
+    //   colorLight : "#ffffff",
+    //   correctLevel : qrcode.QRCode.CorrectLevel.H
+    // });
+    this.getDetail();
   },
   onLoad(options){
     this.id = options.id;
-    this.getDetail();
   }
 }
 </script>
@@ -77,16 +95,16 @@ export default {
   margin: 15rpx;
 }
 .rule{
-  background-color: #ececec;
-  text-align: center;
-  padding: 28rpx 30rpx 78rpx;
-  margin-top: 18rpx;
+  /* background-color: #ececec; */
+  /* text-align: center; */
+  padding: 28rpx;
+  /* margin-top: 18rpx; */
   /*margin-top: 150rpx;*/
 }
-.rule img{
+/* .rule img{
   width: 665rpx;
   height: 512rpx;
-}
+} */
 .goPre{
   padding-left: 30rpx;
   font-size: 36rpx;

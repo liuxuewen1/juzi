@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 3,
 			"list": [
 				{
 					"id": 13,
@@ -54,7 +54,7 @@
 					"id": 3,
 					"name": "详情页",
 					"pathName": "pages/details/main",
-					"query": "id=8"
+					"query": "id=15"
 				},
 				{
 					"id": 4,
@@ -136,7 +136,7 @@
 				},
 				{
 					"id": 17,
-					"name": "个人中心",
+					"name": "个人信息页",
 					"pathName": "pages/self-center/personal/main",
 					"query": ""
 				},
@@ -156,6 +156,18 @@
 					"id": -1,
 					"name": "全部分类",
 					"pathName": "pages/allCategories/main",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的相册",
+					"pathName": "pages/self-center/photo/main",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "购买高清",
+					"pathName": "pages/self-center/buyImage/main",
 					"query": ""
 				}
 			]

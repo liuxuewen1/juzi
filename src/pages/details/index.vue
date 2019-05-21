@@ -1,58 +1,62 @@
 <template>
-  <div class="container conBox" @click="clickHandle('test click', $event)">
-    <!-- <a href="#" class="goPre"><i></i>美景成真照片商城</a> -->
-    <div class="banner">
-      <swiper :indicator-dots="indicatorDots" 
-        :autoplay="autoplay" 
-        :interval="interval" 
-        :duration="duration" 
-        :circular="circular" 
-        @change="swiperChange" 
-        @animationfinish="animationfinish" style="height: 400rpx;">
-        <div v-for="item in detail.bannerList" :key="item.id">
-          <swiper-item @click="onShowBig(item.imgPath)">
-            <image mode='aspectFill' :src="item.imgPath" class="slide-image"/>
-          </swiper-item>
-        </div>
-      </swiper>
-    </div>
-    <h3 class="title">{{detail.name}}
-      <!-- <span class="red">¥500/套</span> -->
-    </h3>
-    <div class="content">
-      <div class="contItem">
-        <h3 class="itemTit"><i>套图说明</i><span></span></h3>
-        <p class="imgText">{{detail.desc}}</p>
-        <!-- <p class="imgText">“拍摄时间可依据您的需求灵活选择；</p>
-        <p class="imgText">“拍摄完毕后，照片会同步到您的账号内；</p> -->
+  <div>
+    <div v-if="!isLoading" class="container conBox" @click="clickHandle('test click', $event)">
+      <!-- <a href="#" class="goPre"><i></i>美景成真照片商城</a> -->
+      <div class="banner">
+        <swiper :indicator-dots="indicatorDots" 
+          :autoplay="autoplay" 
+          :interval="interval" 
+          :duration="duration" 
+          :circular="circular" 
+          @change="swiperChange" 
+          @animationfinish="animationfinish" style="height: 400rpx;">
+          <div v-for="item in detail.bannerList" :key="item.id">
+            <swiper-item @click="onShowBig(item.imgPath)">
+              <image mode='aspectFill' :src="item.imgPath" class="slide-image"/>
+            </swiper-item>
+          </div>
+        </swiper>
       </div>
-      <div class="contItem">
-        <h3 class="itemTit"><i>同类作品展示</i><span></span></h3>
-        <div class="itemImg">
-          <div class="itemImgLi" v-for="item in detail.packageList" :key="item.id"><img :src="item.imgPath" alt=""/></div>
+      <h3 class="title">{{detail.name}}
+        <span>#{{detail.cateName}}</span>
+      </h3>
+      <div class="content">
+        <div class="contItem">
+          <h3 class="itemTit"><i>套图说明</i><span></span></h3>
+          <p class="imgText"><text>{{detail.desc}}</text></p>
+          <!-- <p class="imgText">“拍摄时间可依据您的需求灵活选择；</p>
+          <p class="imgText">“拍摄完毕后，照片会同步到您的账号内；</p> -->
         </div>
+        <div class="contItem">
+          <h3 class="itemTit"><i>同类作品展示</i><span></span></h3>
+          <ul class="photo">
+            <li class="photo-item" v-for="item in detail.packageList" :key="item.id" >
+              <img 
+                mode='aspectFill'
+                :src="item.imgPath"  
+                class="photo-small"
+                @click="onShowPackage(item.imgPath)"
+              />
+            </li>
+          </ul>
+          <!-- <div class="itemImg">
+            <div class="itemImgLi" v-for="item in detail.packageList" :key="item.id"><img :src="item.imgPath" alt=""/></div>
+          </div> -->
+        </div>
+        <game-rule />
       </div>
-      <div class="contItem">
-        <h3 class="itemTit"><i>玩法介绍</i><span></span></h3>
-        <div class="itemLast">
-          <image src="/static/image/flow.jpg" alt="" style="width:100%;display: block;" mode="widthFix"/>
-          <p>预约完成后获得二维码，找到附近的美景成真全方位激光数字影棚；</p>
-          <p>在影棚扫一扫预约二维码，按照工作人员的指引，即可开始您的拍摄旅程；</p>
-          <p>您可按照我们的样片进行拍摄，也可自创拍摄动作；</p>
-          <p>拍摄完成后，即可在小程序内看到您的照片；</p>
-        </div>
+      <bottom-menu 
+        v-if="isChose == 0"
+        :packageid="detail.packageId" 
+        :isstore="detail.isStore" 
+        @goNext="clickActive" 
+        :active-index="0">
+      </bottom-menu>
+      <div class="menu" @click="onChose(detail.name)" v-if="isChose == 1">
+        <div class="chose">选择套系</div>
       </div>
     </div>
-    <bottom-menu 
-      v-if="isChose == 0"
-      :packageid="detail.packageId" 
-      :isstore="detail.isStore" 
-      @goNext="clickActive" 
-      :active-index="0">
-    </bottom-menu>
-    <div class="menu" @click="onChose(detail.name)" v-if="isChose == 1">
-      <div class="chose">选择套系</div>
-    </div>
+    <loadinga v-if="isLoading" />
   </div>
 </template>
 
@@ -60,6 +64,8 @@
 import classification from '@/components/classification' //大图
 import smallImgItem from '@/components/smallImgItem' //小图
 import bottomMenu from '@/components/bottom' //菜单
+import gameRule from '@/components/gameRule' //
+import loadinga from '@/components/loading'
 export default {
   data () {
     return {
@@ -75,17 +81,27 @@ export default {
       describe: '科技风',
       userInfo: {},
       smallImg: require("../../../static/image/bigimg.jpg"),
-      detail: { bannerList: [] }
+      detail: { bannerList: [] },
+      packageBannerList: [],
+      isLoading: true
     }
   },
   components: {
     // card,
     classification,
     smallImgItem,
-    bottomMenu
+    bottomMenu,
+    gameRule,
+    loadinga
   },
 
   methods: {
+    onShowPackage(cur){
+      wx.previewImage({
+        current: cur, // 当前显示图片的http链接
+        urls: this.packageBannerList // 需要预览的图片http链接列表
+      })
+    },
     onShowBig(cur){
       let arrImg = [];
       this.detail.bannerList.forEach(item => arrImg.push(item.imgPath));
@@ -124,11 +140,15 @@ export default {
     getData(){
       this.$http.get('/wechat/package/detail?id=' + this.id).then(res => {
         const data = res.data;
+        this.isLoading = false;
         if(data.status == 1000){
           this.detail = data.data;
           wx.setNavigationBarTitle({
             title: this.detail.name 
-          })
+          });
+          let bannerList = [];
+          this.detail.packageList.forEach(item => bannerList.push(item.imgPath));
+          this.packageBannerList = bannerList; 
         }
       })
     }
@@ -152,6 +172,9 @@ export default {
 .conBox{
   padding-bottom:50rpx;
   /* position: relative; */
+}
+.imgText{
+  height: auto;
 }
 img{
   display: block;
@@ -193,74 +216,8 @@ img{
   color: #333;
 }
 .title span{
-  color: #e97d53;
+  /* color: #e97d53; */
   float: right;
-}
-.itemTit{
-  width: 100%;
-  height: 64rpx;
-  line-height: 64rpx;
-  font-size: 28rpx;
-  color: #999;
-  position: relative;
-}
-.itemTit i{
-  position: relative;
-  display: inline-block;
-  z-index: 2;
-  height: 100%;
-  padding-right: 25rpx;
-  background-color: #fff; 
-}
-.itemTit span{
-  position: absolute;
-  right: 0;
-  top: 30rpx;
-  width: 100%;
-  height: 1rpx;
-  background-color: #ddd;
-}
-.imgText{
-  height: 54rpx;
-  width: 100%;
-  font-size: 28rpx;
-  color: #333;
-}
-.itemImg{
-  padding-top: 17rpx;
-  box-sizing: border-box;
-  height: 197rpx;
-  display: flex;
-}
-.itemImg .itemImgLi{
-  text-align: center;
-  flex: 1;
-}
-.itemImg image{
-  width: 200rpx;
-  height: 180rpx;
-  display: inline-block;
-  /* margin-right:  */
-}
-.itemLast image{
-  margin-bottom:17rpx;
-}
-.itemLast p{
-  font-size: 28rpx;
-  color: #333;
-  padding-left: 18rpx;
-  line-height: 48rpx;
-  position: relative;
-}
-.itemLast p::before{
-  content: "";
-  width: 7rpx;
-  height: 7rpx;
-  background-color: #333;
-  border-radius: 100%;
-  position: absolute;
-  left: 0;
-  top:28rpx;
 }
 .goPre{
   padding-left: 30rpx;
@@ -280,6 +237,25 @@ img{
 }
 
 
+.photo{
+  margin-left: 28rpx;
+  padding: 20rpx 0rpx 0rpx 10rpx;
+  border-left: 1px solid #f5f2f1;
+  overflow: hidden;
+}
+.photo-item{
+  float: left;
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 10rpx;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  position: relative;
+}
+.photo-item .photo-small{
+  width: 200rpx;
+  height: 200rpx;
+}
 .menu{
   width: 100%;
   height: 103rpx;

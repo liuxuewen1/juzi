@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     toDetail () {
-      const url = '../details/main?id=' + this.id
+      const url = '/pages/details/main?id=' + this.id
       wx.navigateTo({ url })
     }
   }

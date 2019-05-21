@@ -72,26 +72,7 @@ export default {
       orderData: [],
       myImgNull:false,
       shouImgNull:false,
-      active_tab: "photo",
-      order_data: [{
-          date: "2018-12-22 14:23:23",
-          photo: "https://www.baidu.com/img/bd_logo1.png",
-          title: "青春年华套图",
-          price: "599",
-          count: "12",
-          qrcode: "https://www.baidu.com/img/bd_logo1.png",
-          status: "待拍照",
-          address: "北京市海淀区农大南路1号硅谷亮城"
-      },{
-          date: "2018-12-22 14:23:23",
-          photo: "https://www.baidu.com/img/bd_logo1.png",
-          title: "青春年华套图",
-          price: "599",
-          count: "12",
-          qrcode: "https://www.baidu.com/img/bd_logo1.png",
-          status: "待拍照",
-          address: "北京市海淀区农大南路1号硅谷亮城"
-      }]
+      active_tab: "photo"
     }
   },
   computed: {

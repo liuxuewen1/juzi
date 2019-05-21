@@ -13,7 +13,7 @@
             </div>
             <div class="qrcode">
               <span v-if="data.shotState==0" @click="onClick">查看二维码</span>
-              <span v-if="data.shotState==1">查看照片</span>
+              <span v-if="data.shotState==1" @click="onShowPhoto(data.orderId)">查看照片</span>
             </div>
             <!-- <div class="qrcode" >
               <img :src="data.qrcode" alt="">
@@ -39,6 +39,9 @@ export default {
     guide
   },
   methods: {
+    onShowPhoto(orderId){
+      wx.navigateTo({ url: '/pages/self-center/photo/main?orderId='+orderId})
+    },
     onClick(){
       wx.navigateTo({ url: `/pages/order-success/main?id=${this.data.orderId}`})
     }

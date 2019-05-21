@@ -1,44 +1,63 @@
 <template>
   <div class="center-warp">
-    <div class="box-order" v-if="orderData.length">
+    <div class="box-order" v-if="!isLoading && orderData.length">
       <order :datas="orderData"></order>
     </div>
-    <no-photos v-if="!orderData.length" tit="您还没有拍过美美的照片哦～" text="立即去前往拍摄"></no-photos>
+    <no-photos v-if="!isLoading && !orderData.length" @click="onGoAppoint" tit="您还没有拍过美美的照片哦～" text="立即去前往拍摄"></no-photos>
+    <loading v-if="isLoading" />
   </div>
 </template>
 
 <script>
 import order from '@/components/order'
+import loading from '@/components/loading'
 import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data(){
     return {
-      pageOrder: 1,
+      page: 1,
+      pageSize: 20,
       orderData: [],
-      myImgNull:false
+      totalCount: 0,
+      isLoading: true
     }
   },
   computed: {
   },
   methods: {
+    onGoAppoint(){
+      wx.navigateTo({ url: '/pages/appointment/main'})
+    },
     getOrderList(){
-      this.$http.get(`/wechat/user/subOrderList?page=${this.pageOrder}&pageSize=20`).then(res => {
+      this.$http.get(`/wechat/user/subOrderList?page=${this.page}&pageSize=${this.pageSize}`).then(res => {
         const data = res.data;
+        this.isLoading = false;
         if(data.status == 1000){
-          this.orderData = data.data.orderList;
+          this.orderData = this.orderData.concat(data.data.orderList);
+          this.totalCount = data.data.totalCount;
         }
       })
     }
   },
   components: {
     order,
-    noPhotos
+    noPhotos,
+    loading
   },
   onTabItemTap(item) {
     // this.changeTab(this.active_tab)
   },
-  onLoad(){
+  onShow(){
+    this.page = 1;
+    this.orderData = [];
+    this.isLoading = true;
     this.getOrderList();
+  },
+  onReachBottom(){
+    if(Math.ceil(this.totalCount/this.pageSize) > this.page){
+      this.page += 1;
+      this.getOrderList();
+    }
   }
 }
 </script>

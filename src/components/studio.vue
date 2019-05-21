@@ -61,12 +61,29 @@ export default {
       })
     },
     getLocation(){
+      const that = this;
       return promisify(wx.getSetting)().then(res => {
-        if (!res.authSetting['scope.userLocation']) {
+        // wx.showToast({title: res.authSetting['scope.userLocation'].toString()})
+        const scope = res.authSetting['scope.userLocation'];
+        if (scope == undefined) {
           promisify(wx.authorize)({
             scope: 'scope.userLocation'
           }).then(res => {
             return this.setLocation();
+          });
+        }else if(scope == false){
+          wx.showModal({
+            title: '是否授权当前位置',
+            content: '需要获取您的地理位置，请确认授权，否则定位功能将无法使用',
+            success: function (tip) {
+              if (tip.confirm) {
+                wx.openSetting({
+                  success(){
+                    return that.setLocation();
+                  }
+                });
+              }
+            }
           });
         }else{
           return this.setLocation();
@@ -156,6 +173,7 @@ export default {
   padding: 23rpx 30rpx;
 }
 .nearbyStudio ul{
+  overflow: scroll;
   height: 530rpx;
 }
 .nearbyStudio .tit{

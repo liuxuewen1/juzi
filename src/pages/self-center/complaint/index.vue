@@ -33,7 +33,7 @@ export default {
           const data = res.data;
           if(data.status == 1000){
             wx.showToast({
-              title: '谢谢您的反馈，我们会尽快处理~',
+              title: '谢谢您的反馈~',
               icon: 'success',
               duration: 2000
             })

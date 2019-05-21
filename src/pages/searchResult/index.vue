@@ -39,7 +39,7 @@ export default {
         const data = res.data;
         if(data.status == 1000){
           this.result = data.data.packageList;
-          this.result = this.result.concat(this.result)
+          // this.result = this.result.concat(this.result)
         }
       })
     }

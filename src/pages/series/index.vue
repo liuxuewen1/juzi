@@ -1,5 +1,6 @@
 <template>
   <div class="series">
+    <div class="border"></div>
     <ul class="left">
       <li 
         :class="item.active?'active':''" 
@@ -177,8 +178,15 @@ export default {
 <style scoped>
 .series{
   position: relative;
-  height: 100%;
-  border-top: 1rpx solid #f1f1f1;
+  /* height: 100%; */
+}
+.border{
+  height: 1rpx;
+  width: 100%;
+  background-color: #f1f1f1;
+  position: fixed;
+  left: 0;
+  top:0;
 }
 .link{
   position: absolute;
@@ -190,9 +198,9 @@ export default {
 .left{
   width: 25%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 0;
+  top: 1rpx;
   background-color: #f1f1f1;
 }
 .left li{

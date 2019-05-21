@@ -28,7 +28,7 @@ export default {
   methods:{
     onMakePhone(){
       wx.makePhoneCall({
-        phoneNumber: '400-8888-8888'
+        phoneNumber: '4008-77-8191'
       })
     },
     succCallback(){
@@ -66,11 +66,11 @@ export default {
     }
   },
   mounted(){
-    this.$http.post('https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=' + wx.getStorageSync('x-token'), {
-      scene: 'MjAxOTA0MjIyMjU0NzE1OA=='
-    }).then(res => {
-      console.log(res)
-    })
+    // this.$http.post('https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=' + wx.getStorageSync('x-token'), {
+    //   scene: 'MjAxOTA0MjIyMjU0NzE1OA=='
+    // }).then(res => {
+    //   console.log(res)
+    // })
   },
   onLoad(){
     this.showAppoint = false;

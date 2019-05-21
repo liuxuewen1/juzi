@@ -1,6 +1,6 @@
 <template>
   <div class="center-warp">
-    <div class="box-collection" v-if="collectionData.length">
+    <div class="box-collection" v-if="!isLoading && collectionData.length">
       <smallitem 
         :key="item.id"
         v-for='item in collectionData' 
@@ -11,7 +11,8 @@
         :id="item.id"
       />
     </div>
-    <no-photos v-if="!collectionData.length" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos>
+    <loading v-if="isLoading" />
+    <no-photos v-if="!isLoading && !collectionData.length" @click="onGoHot" tit="您还没有收藏过美美的照片哦～" text="立即查看样图"></no-photos>
   </div>
 </template>
 
@@ -19,23 +20,32 @@
 // import tab from '@/components/center-tab'
 // import timeline from '@/components/timeline'
 // import order from '@/components/order'
+import loading from '@/components/loading'
 import smallitem from '@/components/smallImgItem'
 import noPhotos from '@/components/noPhotos' //无照片
 export default {
   data(){
     return {
-      pageCollection: 1,
-      collectionData: []
+      page: 1,
+      pageSize: 20,
+      totalCount: 0,
+      collectionData: [],
+      isLoading: true
     }
   },
   computed: {
   },
   methods: {
+    onGoHot(){
+      wx.navigateTo({ url: '/pages/hotList/main?active=hot' })
+    },
     getCollection(){
-      this.$http.get(`/wechat/user/myStorePackages?page=${this.pageCollection}&pageSize=20`).then(res => {
+      this.$http.get(`/wechat/user/myStorePackages?page=${this.page}&pageSize=${this.pageSize}`).then(res => {
         const data = res.data;
+        this.isLoading = false;
         if(data.status == 1000){
-          this.collectionData = data.data.packageList;
+          this.collectionData = this.collectionData.concat(data.data.packageList);
+          this.totalCount = data.data.totalCount;
         }
       })
     }
@@ -45,10 +55,20 @@ export default {
     // order,
     // timeline,
     smallitem,
-    noPhotos
+    noPhotos,
+    loading
   },
-  onLoad(){
+  onShow(){
+    this.page = 1;
+    this.collectionData = [];
+    this.isLoading = true;
     this.getCollection();
+  },
+  onReachBottom(){
+    if(Math.ceil(this.totalCount/this.pageSize) > this.page){
+      this.page += 1;
+      this.getCollection();
+    }
   },
   onTabItemTap(item) {
     // this.changeTab(this.active_tab)
