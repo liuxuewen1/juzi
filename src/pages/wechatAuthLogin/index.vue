@@ -1,11 +1,13 @@
 <template>
   <div class="center-warp">
+    <logo />
     <button type="primary" open-type="getUserInfo" @getuserinfo="login">微信账号登录</button>
   </div>
 </template>
 
 <script>
 import { promisify } from '@/utils/index' 
+import logo from '@/components/logo' 
 export default {
   data () {
     return {
@@ -13,7 +15,7 @@ export default {
   },
 
   components: {
-    
+    logo
   },
 
   methods: {
@@ -70,6 +72,6 @@ export default {
 <style scoped>
 .center-warp{
   padding: 0 58rpx;
-  padding-top: 300rpx;
+  margin-top: 100rpx;
 }
 </style>

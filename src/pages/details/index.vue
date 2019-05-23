@@ -166,7 +166,6 @@ export default {
     this.getUserInfo()
   },
   onLoad(options) {
-    console.log('load 111')
     this.isLoading = true;
     this.id = options.id;
     this.isChose = options.chose == 1? 1 : 0; //0-非选择套餐 1-选择套餐

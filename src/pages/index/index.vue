@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { promisify } from '@/utils/index' 
+import { promisify, getLocation } from '@/utils/index'
 export default {
   data () {
     return {
@@ -88,10 +88,11 @@ export default {
       smallImg: require("../../../static/image/bigimg.jpg"),
       hotData: { packageList: []  },
       categoryData: { packageList: [] },
-      jxData: { packageList: []  }
+      jxData: { packageList: []  },
+      longitude: 0,
+      latitude: 0
     }
   },
-  mounted(){},
   components: {},
   methods: {
     onGoMore(type){
@@ -111,7 +112,8 @@ export default {
       wx.navigateTo({ url })
     },
     getClassType(){
-      this.$http.get('/wechat/pageindex/catelist').then(res => {
+      const params = `longitude=${this.longitude}&latitude=${this.latitude}`;
+      this.$http.get(`/wechat/pageindex/catelist?${params}`).then(res => {
         const data = res.data;
         if(data.status == 1000){
           this.classType = data.data.list;
@@ -146,7 +148,7 @@ export default {
       // console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
     },
     clickActive(index){
-      console.log(index);
+      // console.log(index);
     },
     login(){
       let user_info = null;
@@ -154,7 +156,6 @@ export default {
         user_info = user.userInfo;
         return promisify(wx.login)()
       }).then(({ code }) => {
-        console.log(user_info)
         return this.$http.get('/wechat/user/login', { 
           params: { 
             js_code: code,
@@ -164,7 +165,6 @@ export default {
           } 
         })
       }).then(res => {
-        console.log(res, 333311)
         wx.setStorageSync('x-token', res.data.data.token)
         wx.setStorageSync('x-avatar', res.data.data.avatar)
         wx.setStorageSync('x-phone', res.data.data.phone != ''? res.data.data.phone : 0)
@@ -192,10 +192,8 @@ export default {
     getPhoneNumber(e) {
       const detail = e.mp.detail;
       if(detail.errMsg.indexOf('user deny') === -1){
-        // console.log(detail.iv)
-        // console.log(detail.encryptedData,1111)
         this.$http.post(`/wechat/user/bindPhone?encryptedData=${detail.encryptedData}&iv=${detail.iv}`).then(res => {
-          console.log(res)
+          // console.log(res)
         })
       }
     },
@@ -220,24 +218,23 @@ export default {
         }
       })
     },
-    getLocation(){
-      promisify(wx.getLocation)().then(res => {
-        console.log(res);
-      })
-    },
     init(){
       if(!wx.getStorageSync('x-token')){
         wx.navigateTo({ url: '/pages/wechatAuthLogin/main'})
         return;
       }
-      this.getClassType();
+      getLocation(wx).then(res => {
+        console.log(res, 998)
+        this.longitude = res.longitude;
+        this.latitude = res.latitude;
+        this.getClassType();
+      })
       this.getList();
       this.getBanner();
     }
   },
   onLoad() {
     this.init();
-    console.log('index-load')
   },
   onPullDownRefresh(){
     wx.showNavigationBarLoading();  //在标题栏中显示加载

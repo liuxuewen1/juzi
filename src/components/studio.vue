@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { promisify } from '@/utils/index' 
+import { promisify, getLocation } from '@/utils/index' 
 export default {
   props: ['onSubmit', 'mchId'],
   data () {
@@ -60,44 +60,12 @@ export default {
         }
       })
     },
-    getLocation(){
-      const that = this;
-      return promisify(wx.getSetting)().then(res => {
-        const scope = res.authSetting['scope.userLocation'];
-        if (scope == undefined) {
-          promisify(wx.authorize)({
-            scope: 'scope.userLocation'
-          }).then(res => {
-            return this.setLocation();
-          });
-        }else if(scope == false){
-          wx.showModal({
-            title: '是否授权当前位置',
-            content: '需要获取您的地理位置，请确认授权，否则定位功能将无法使用',
-            success: function (tip) {
-              if (tip.confirm) {
-                wx.openSetting({
-                  success(){
-                    return that.setLocation();
-                  }
-                });
-              }
-            }
-          });
-        }else{
-          return this.setLocation();
-        }
-      });
-    },
-    setLocation(){
-      return promisify(wx.getLocation)()
-    },
     onChoseStudio(item){
       item.is_active = !item.is_active;
       this.onSubmit('Studio', this.addressList.filter(item => item.is_active === true), true);
     },
     onAgain(){
-      this.getLocation().then((res) => {
+      getLocation().then((res) => {
         this.longitude = res.longitude;
         this.latitude = res.latitude;
         this.getDataAddress();
